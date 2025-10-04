@@ -24,7 +24,10 @@
         
         <img src="/home/activity.png" alt="" class="min-w-[100px]" width="150">
         <div>
-            <p class="text-3xl font-bold font-main"> {event.title} </p>
+            <div class="flex items-center space-x-3 max-sm:flex-col max-sm:space-y-3">
+                <p class="text-3xl font-bold font-main"> {event.title}  </p> 
+                <p class="text-lg px-4 py-1 bg-[#BCF5C5] text-[#00E043] rounded-3xl"> success </p>
+            </div>
             <div class="flex items-center space-x-4 mt-3 ">
                 <img src="/home/location.png" alt="" width="30">
                 <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {event.start_time} - {event.end_time} </p>
@@ -33,7 +36,7 @@
     </div>
     <!-- box ขวา -->
     <div class="flex flex-col justify-center space-y-3 max-lg:mt-5">
-        <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer "> Join us</button>
+        <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer "> Qr Code </button>
         <button class="px-6 text-xl py-3 border-3 border-[#ADC2A9] text-[#9ba69b] rounded-lg font-bold cursor-pointer hover:bg-[#ebdfd3] duration-200" onclick={openModal}> More Info </button>
     </div>
     
@@ -45,7 +48,7 @@
 <div class="fixed inset-0 flex items-center justify-center z-50">
     <section class="w-[40%] p-10 font-semibold rounded-2xl shadow-md h-[800px] overflow-y-auto bg-white max-lg:w-[90%] max-sm:mt-30">
         <div class="flex justify-between items-center max-sm:flex-col max-sm:space-y-3">
-            <p class="text-3xl font-bold"> {event.title} </p>
+            <p class="text-3xl font-bold"> {event.title} </p> 
             <p class="bg-[#1AD048] text-white px-5 py-1 rounded-2xl"> {event.category} </p>
         </div>
         <div class="mt-4 flex items-center space-x-2 max-sm:justify-center">
@@ -75,13 +78,13 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-5 max-sm:flex max-sm:flex-col max-sm:gap-0">
-            <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 border-2 text-[#8E8B8B] font-bold text-xl hover:bg-[#f1f1f1] duration-200 rounded-lg" onclick={closeModal}>
-            Cancel
+        <div class="max-sm:flex max-sm:flex-col max-sm:gap-0">
+            <button class="w-full max-sm:my-2 shadow-md my-5 py-3 border-2 text-[#8E8B8B] font-bold text-xl hover:bg-[#f1f1f1] duration-200 rounded-lg" onclick={closeModal}>
+            Close
             </button>
-            <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 text-white bg-[#FFB97C] font-bold text-xl hover:bg-[#d89458] duration-200 rounded-lg">
+            <!-- <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 text-white bg-[#FFB97C] font-bold text-xl hover:bg-[#d89458] duration-200 rounded-lg">
             Join us 
-            </button>
+            </button> -->
         </div>
     </section>
 </div>

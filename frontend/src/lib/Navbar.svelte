@@ -1,20 +1,20 @@
 <script>
-    let isLogin = $state(false)
+    let isLogin = $state(true)
     let isOpen = $state(false)
 
 </script>
 
 <nav class="bg-[#D3E4CD] p-5">
     <section class="w-[90%] mx-auto flex justify-between items-center">
-        <a href="/" class="font-semibold text-3xl text-[#FFB97C]">
+        <a href="/home" class="font-semibold text-3xl text-[#FFB97C]">
             KindHeart
         </a>
 
         <!-- ฝั่งขวากำหนด min-w ไว้เพื่อกันเด้ง -->
-        <div class="flex items-center justify-end min-w-[250px] max-md:hidden">
+        <div class="flex items-center justify-end min-w-[250px] max-lg:hidden">
             {#if isLogin}
                 <img src="/navbar/bell.png" alt="" width="35" class="cursor-pointer">
-                <a class="flex items-center ml-7" href="">
+                <a class="flex items-center ml-7" href="/profile    ">
                     <p class="text-[#99A799] font-bold text-xl text-shadow-sm"> kiwvy </p>
                     <img src="/navbar/drop-down.png" alt="" width="40">
                 </a>
@@ -26,20 +26,22 @@
                 </a>
             {/if}
         </div>
-
-        <img src="/navbar/hamburger.png" alt="" width="35" class="hidden max-md:block" onclick={() => {isOpen = !isOpen}}>
+        <button  class="hidden max-lg:block" onclick={() => {isOpen = !isOpen}}>
+            <img src="/navbar/hamburger.png" alt="" width="35">
+        </button>
+        
     </section>
 </nav>
 
 {#if isOpen }
-<div class="bg-[#D3E4CD] shadow-sm p-5 hidden max-md:block">
+<div class="bg-[#D3E4CD] shadow-sm p-5 hidden max-lg:block">
     {#if isLogin}
     <div class="flex item-center justify-around">
         <img src="/navbar/bell.png" alt="" width="35" class="cursor-pointer">
-        <a class="flex items-center ml-7 text-[#99A799] font-bold text-xl text-shadow-sm" href="">
+        <a class="flex items-center ml-7 text-[#99A799] font-bold text-xl text-shadow-sm" href="/profile">
             Kiwvy
         </a>
-        <a class="flex items-center ml-7 text-[#99A799] font-bold text-xl text-shadow-sm" href="">
+        <a class="flex items-center ml-7 text-[#99A799] font-bold text-xl text-shadow-sm" href="/">
             Logout
         </a>
     </div>
