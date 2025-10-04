@@ -7,6 +7,7 @@
         AOS.init();
     })
 
+
 </script>
 
 <main class="bg-[#FEF5ED] h-screen flex justify-center items-center">
@@ -23,7 +24,7 @@
         <img src="./login/password-green.png" alt="" class="absolute left-1 top-3">
         <input type="password" placeholder="Password" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" />
       </div>
-      <button class="px-14 py-3 text-lg my-5 bg-[#ADC2A9] font-semibold text-white rounded-4xl hover:bg-[#99a798] duration-200"> Sign in</button>
+      <a class="px-14 py-3 text-lg my-5 bg-[#ADC2A9] font-semibold text-white rounded-4xl hover:bg-[#99a798] duration-200" href="/home"> Sign in</a>
       <p class="text-[#99A799] font-semibold text-lg my-3"> Don't have an account ?  <a href="/register" class="text-[#FFB97C]"> Register </a></p>
     </div>
 
