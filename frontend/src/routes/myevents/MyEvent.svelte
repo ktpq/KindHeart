@@ -37,7 +37,7 @@
     <!-- box ขวา -->
     <div class="flex flex-col justify-center space-y-3 max-lg:mt-5">
         <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer "> Participants </button>
-        <a class="px-6 text-xl py-3 border-3 border-[#ADC2A9] text-[#9ba69b] rounded-lg font-bold cursor-pointer hover:bg-[#ebdfd3] duration-200 text-center" href="/"> Edit </a>
+        <a class="px-6 text-xl py-3 border-3 border-[#ADC2A9] text-[#9ba69b] rounded-lg font-bold cursor-pointer hover:bg-[#ebdfd3] duration-200 text-center" href="/edit/{event.id}"> Edit </a>
     </div>
     
 </div>

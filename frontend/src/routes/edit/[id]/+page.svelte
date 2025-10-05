@@ -1,7 +1,7 @@
 <script>
     let file = null
     let previewUrl = "";
-
+    export let data
     //@ts-ignore
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -14,7 +14,7 @@
 
 <div class="flex items-center space-x-4">
     <img src="/create/message.png" alt="" width="50">
-    <h1 class="text-4xl font-bold"> Create Event</h1>
+    <h1 class="text-4xl font-bold"> Edit Event -> {data.id}</h1>
 </div>
 
 <p class="text-[#99A799] text-3xl font-semibold mt-5"> Title </p>
