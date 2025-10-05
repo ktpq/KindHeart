@@ -4,3 +4,11 @@
 @theme{
     --font-main: "Inter", sans-serif;
 }
+
+.btn-orange{
+    @apply cursor-pointer text-white bg-[#FFB97C] px-5 py-2 flex items-center space-x-3 hover:bg-[#d38a4a] duration-200 rounded-lg shadow-md
+}
+
+.btn-white{
+    @apply cursor-pointer px-5 py-2 flex items-center space-x-3 hover:bg-[#e7e6e5] duration-200 rounded-lg shadow-md border border-gray-300
+}

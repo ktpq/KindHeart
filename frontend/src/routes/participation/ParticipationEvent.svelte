@@ -1,16 +1,27 @@
 <script>
     let { event } = $props()
     
-    let isModalShow = $state(false)
+    let isInfoModalShow = $state(false)
+    let isQrModalShow = $state(false)
 
-    const openModal = () => {
-        isModalShow = true
+    const openInfoModal = () => {
+        isInfoModalShow = true
         document.body.style.overflow = "hidden"
     }
 
-    const closeModal = () =>{
-        isModalShow = false
+    const closeInfoModal = () =>{
+        isInfoModalShow = false
         document.body.style.overflow = "" 
+    }
+
+    const openQrModal = () => {
+        isQrModalShow = true
+        document.body.style.overflow = "hidden"
+    }
+
+    const closeQrModal = () => {
+        isQrModalShow = false
+        document.body.style.overflow = ""
     }
 
     
@@ -36,15 +47,18 @@
     </div>
     <!-- box ขวา -->
     <div class="flex flex-col justify-center space-y-3 max-lg:mt-5">
-        <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer "> Qr Code </button>
-        <button class="px-6 text-xl py-3 border-3 border-[#ADC2A9] text-[#9ba69b] rounded-lg font-bold cursor-pointer hover:bg-[#ebdfd3] duration-200" onclick={openModal}> More Info </button>
+        <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer" onclick={openQrModal}> Qr Code </button>
+        <button class="px-6 text-xl py-3 border-3 border-[#ADC2A9] text-[#9ba69b] rounded-lg font-bold cursor-pointer hover:bg-[#ebdfd3] duration-200" onclick={openInfoModal}> More Info </button>
     </div>
     
 </div>
 
-<!-- Event modal -->
-{#if isModalShow}
+<!-- Info modal -->
+{#if isInfoModalShow || isQrModalShow}
 <div class="fixed inset-0 bg-black/50 z-40"></div>
+{/if}
+
+{#if isInfoModalShow}
 <div class="fixed inset-0 flex items-center justify-center z-50">
     <section class="w-[40%] p-10 font-semibold rounded-2xl shadow-md h-[800px] overflow-y-auto bg-white max-lg:w-[90%] max-sm:mt-30">
         <div class="flex justify-between items-center max-sm:flex-col max-sm:space-y-3">
@@ -79,12 +93,35 @@
         </div>
 
         <div class="max-sm:flex max-sm:flex-col max-sm:gap-0">
-            <button class="w-full max-sm:my-2 shadow-md my-5 py-3 border-2 text-[#8E8B8B] font-bold text-xl hover:bg-[#f1f1f1] duration-200 rounded-lg" onclick={closeModal}>
+            <button class="w-full max-sm:my-2 shadow-md my-5 py-3 border-2 text-[#8E8B8B] font-bold text-xl hover:bg-[#f1f1f1] duration-200 rounded-lg" onclick={closeInfoModal}>
             Close
             </button>
             <!-- <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 text-white bg-[#FFB97C] font-bold text-xl hover:bg-[#d89458] duration-200 rounded-lg">
             Join us 
             </button> -->
+        </div>
+    </section>
+</div>
+{/if}
+
+{#if isQrModalShow}
+<div class="fixed inset-0 flex items-center justify-center z-50">
+    
+    <section class="w-[26%] font-semibold shadow-md overflow-y-auto bg-[#f8f8f8] max-lg:w-[90%] max-sm:mt-30">
+        <div class="p-7 bg-blue-500">
+            <h1 class="text-2xl text-white font-semibold text-center"> Plant a tree </h1>
+        </div>
+        
+        <div>
+            <div class="flex flex-col items-center space-y-5">
+                <img src="qrcode.png" alt="" width="200" class="shadow-lg rounded-lg mt-3">
+                <p class="font-bold"> Ticket code </p>
+                <p class="border-[#B0B0B0] w-[70%] text-center py-3 border-dashed border-2 rounded-lg mb-4"> ABCDEFGHIJ</p>
+            </div>
+        </div>
+
+        <div class="border-t flex justify-center items-center py-3 mt-3 border-[#B0B0B0] border">
+            <button class="text-[#A2A2A2] font-extrabold cursor-pointer" onclick={closeQrModal}> Close </button>
         </div>
     </section>
 </div>
