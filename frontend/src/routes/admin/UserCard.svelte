@@ -8,7 +8,7 @@
         <h3 class="text-lg font-semibold mt-2 text-[#ADC2A9]"> {user.email} </h3>
     </div>
     <div class="flex items-center space-x-3">
-        <button class="px-5 py-2 text-xl font-semibold  border-gray-200 hover:bg-[#d3d2d2] duration-200 rounded-xl shadow-md cursor-pointer"> View profile </button>
+        <a class="px-5 py-2 text-xl font-semibold  border-gray-200 hover:bg-[#d3d2d2] duration-200 rounded-xl shadow-md cursor-pointer" href="/user/{user.id}"> View profile </a>
         <button class="px-5 py-2 text-white text-xl font-semibold bg-[#FE9A9C] hover:bg-[#ce6668] duration-200 rounded-xl shadow-md cursor-pointer"> Ban </button>
     </div>
 </div>
