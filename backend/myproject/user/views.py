@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from user.models import *
 from django.http import Http404
-from user.serializers import *
+from .serializers import UserSerializer
 
 # pyright: reportMissingImports=false
 from rest_framework.views import APIView
