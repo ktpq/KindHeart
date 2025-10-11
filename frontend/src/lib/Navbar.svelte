@@ -1,4 +1,6 @@
 <script>
+	import Cookies from 'js-cookie'
+	import { goto } from '$app/navigation';
 	let isLogin = $state(true);
 	let isOpen = $state(false);
 	let isDropDownOpen = $state(false);
@@ -6,6 +8,11 @@
 	const toggleDropdown = () => {
 		isDropDownOpen = !isDropDownOpen;
 	};
+
+	const handleLogout = () => {
+		Cookies.remove('authToken')
+		goto('/login')
+	}
 </script>
 
 <nav class="bg-[#D3E4CD] p-5 relative shadow-sm">
@@ -39,13 +46,13 @@
 						>
 							<a href="/profile" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">Profile</a>
 							<!-- <a href="/myevents" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">My Events</a> -->
-							<a href="/" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#d33641]">Logout</a>
+							<button class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#d33641]" onclick={handleLogout}>Logout</button>
 						</div>
 					{/if}
 				</div>
 			{:else}
 				<a
-					href="/"
+					href="/login"
 					class="h-[40px] flex items-center px-7 rounded-xl bg-[#FEF5ED] border border-[#ADC2A9] text-[#99A799] font-semibold text-xl"
 				>
 					Login
@@ -85,12 +92,12 @@
 				<div class="mt-3 bg-[#FEF5ED] border border-[#ADC2A9] rounded-lg shadow-md">
 					<a href="/profile" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">Profile</a>
 					<!-- <a href="/myevents" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">My Events</a> -->
-					<a href="/" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#d33641]">Logout</a>
+					<button class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#d33641]" onclick={handleLogout}>Logout</button>
 				</div>
 			{/if}
 		{:else}
 			<a
-				href="/"
+				href="/login"
 				class="block w-full text-center h-[40px] mt-2 rounded-xl bg-[#FEF5ED] border border-[#ADC2A9] text-[#99A799] font-semibold text-xl"
 			>
 				Login

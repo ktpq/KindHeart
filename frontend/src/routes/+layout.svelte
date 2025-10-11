@@ -9,7 +9,7 @@
 <svelte:head>
 	<!-- <link rel="icon" href={favicon} /> -->
 </svelte:head>
-{#if page.url.pathname !== "/" && page.url.pathname !== "/register" && page.url.pathname !== "/admin"}
+{#if page.url.pathname !== "/login" && page.url.pathname !== "/register" && page.url.pathname !== "/admin"}
 <Navbar/>
 {/if}
 

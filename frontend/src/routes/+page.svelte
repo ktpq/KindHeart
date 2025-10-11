@@ -1,55 +1,125 @@
 <script>
+    import HomeEvent from './HomeEvent.svelte';
     import { onMount } from 'svelte';
     import 'aos/dist/aos.css';
     import AOS from 'aos'
-    import axios from 'axios'
-    import Cookies from 'js-cookie'
  
     onMount(() =>{
         AOS.init();
     })
 
-    let username = $state()
-    let password = $state()
-
-    const handleSignin = async () => {
-      try {
-          const base_api = import.meta.env.VITE_API_URL
-          const response = await axios.post(`${base_api}/api-token-auth/`, {username: username, password: password})
-          const token = response.data.token
-          Cookies.set('authToken', token, {expires: 7})
-          alert("ล็อคอินสำเร็จ !")
-      } catch (error){
-          console.log("erro login", error)
-      }
-
+    let events = $state([
+    {
+        id: 1,
+        date: "3 December 2025",
+        title: "Plant the tree",
+        location: "Chonburi",
+        start_time: "11AM",
+        end_time: "4PM",
+        category: "Environment",
+        description: "ช่วยกันปลูกต้นไม้เพื่อเพิ่มพื้นที่สีเขียวในชุมชน",
+        capacity: 25,
+        author: "Ronnie Coleman"
+    },
+    {
+        id: 2,
+        date: "10 December 2025",
+        title: "Beach Cleanup",
+        location: "Pattaya",
+        start_time: "8AM",
+        end_time: "12PM",
+        category: "Environment",
+        description: "ร่วมทำความสะอาดชายหาดและอนุรักษ์สิ่งแวดล้อม",
+        capacity: 40,
+        author: "Lisa Smith"
+    },
+    {
+        id: 3,
+        date: "15 January 2026",
+        title: "Charity Run",
+        location: "Bangkok",
+        start_time: "6AM",
+        end_time: "10AM",
+        category: "Sports",
+        description: "วิ่งการกุศลเพื่อสนับสนุนเด็กนักเรียน",
+        capacity: 100,
+        author: "John Doe"
+    },
+    {
+        id: 4,
+        date: "20 February 2026",
+        title: "Book Fair",
+        location: "Chiang Mai",
+        start_time: "9AM",
+        end_time: "6PM",
+        category: "Education",
+        description: "งานแสดงหนังสือและกิจกรรมการเรียนรู้สำหรับทุกเพศทุกวัย",
+        capacity: 75,
+        author: "Mary Johnson"
+    },
+    {
+        id: 5,
+        date: "5 March 2026",
+        title: "Art Workshop",
+        location: "Khon Kaen",
+        start_time: "1PM",
+        end_time: "5PM",
+        category: "Art",
+        description: "เวิร์กชอปศิลปะสำหรับผู้เริ่มต้นและผู้สนใจงานศิลป์",
+        capacity: 20,
+        author: "Alice Brown"
+    },
+    {
+        id: 6,
+        date: "18 April 2026",
+        title: "Music Festival",
+        location: "Phuket",
+        start_time: "2PM",
+        end_time: "11PM",
+        category: "Music",
+        description: "เทศกาลดนตรีสดกับศิลปินชั้นนำหลายวง",
+        capacity: 500,
+        author: "David Lee"
     }
+])
+
+
 
 </script>
 
-<main class="bg-[#FEF5ED] h-screen flex justify-center items-center">
-  
-  <section class="grid grid-cols-2 w-[65vw] max-xl:w-full max-xl:grid-cols-1">
-    <div class="px-25 flex flex-col items-center justify-center max-lg:px-15 max-sm:px-5"  data-aos="fade-up" data-aos-duration="1500">
-      <h1 class="text-5xl font-semibold mb-5 text-center">Login</h1>
+<main class="bg-[#FEF5ED] min-h-screen p-5">
+    <section class="w-[90%] mx-auto mt-5">
 
-      <div class="my-4 w-full relative">
-        <img src="./login/email-green.png" alt="" class="absolute left-1 top-3">
-        <input type="text" placeholder="Username" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" bind:value={username}/>
-      </div>
+        <div class="flex justify-between items-center max-lg:flex-col">
+            <div class="flex space-x-3 max-lg:flex-col max-lg:w-full max-lg:space-y-3">
+                <div class="relative max-lg:w-full">
+                    <input type="text" class="bg-[#ADC2A9] py-3 pr-5 pl-12 border-2 border-[#D3E4CD] rounded-lg focus:outline-none font-bold max-lg:w-[100%]" placeholder="Search Events">
+                    <img src="/home/search.png" alt="" width="25" class="absolute top-3 left-2">
+                </div>
+                <select name="" id="" class="bg-[#ADC2A9] py-3 px-5 rounded-lg border-2 border-[#D3E4CD] focus:outline-none font-bold">
+                    <option value="All Events">All Events </option>
+                    <option value="ex1"> Ex1 </option>
+                </select>
+            </div>
 
-      <div class="my-4 w-full relative">
-        <img src="./login/password-green.png" alt="" class="absolute left-1 top-3">
-        <input type="password" placeholder="Password" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" bind:value={password}/>
-      </div>
-      <button class="px-14 py-3 text-lg my-5 bg-[#ADC2A9] font-semibold text-white rounded-4xl hover:bg-[#99a798] duration-200" onclick={handleSignin}> Sign in</button>
-      <p class="text-[#99A799] font-semibold text-lg my-3"> Don't have an account ?  <a href="/register" class="text-[#FFB97C]"> Register </a></p>
-    </div>
+            <select name="" id="" class="bg-[#ADC2A9] py-3 px-5 rounded-lg border-2 border-[#D3E4CD] focus:outline-none font-bold max-lg:w-full max-lg:mt-2">
+                <option value="Newest">Newest </option>
+                <option value="Oldest"> Oldest </option>
+            </select>
+        </div>
 
-    <!-- เอาไว้ใส่ภาพ -->
-    <div class="max-xl:hidden" data-aos="fade-up" data-aos-duration="1500">
-      <img src="./login/image.png" alt="">
-    </div>
+        <div class="mt-10">
 
-  </section>
+            <!-- event component -->
+            {#each events as event}
+            <HomeEvent event={event}/>
+            {/each}
+
+            
+        </div>
+    </section>
+
 </main>
+
+ <!-- h-[800px] overflow-y-auto -->
+

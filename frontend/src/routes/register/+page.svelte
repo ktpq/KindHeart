@@ -1,3 +1,31 @@
+<script>
+  import { goto } from "$app/navigation";
+  import axios from "axios";
+
+  let username = $state()
+  let email = $state()
+  let password = $state()
+  let confirmPassword = $state()
+
+  const handleRegister = async () => {
+    try{
+      const base_api = import.meta.env.VITE_API_URL
+      if (password !== confirmPassword){
+        alert("รหัสผ่านทั้งสอง ไม่ตรงกัน")
+      }
+      const response = await axios.post(`${base_api}/api/auth/register/`, {username, email, password})
+      alert("ลงทะเบียนสำเร็จ !")
+      goto('/login')
+    } catch (error){
+      if (error){
+        alert("มี username นี้อยู่เเล้ว !")
+      }
+    }
+    
+  }
+
+</script>
+
 <main class="bg-[#FEF5ED] h-screen flex justify-center items-center">
   <section class="grid grid-cols-2 w-[65vw] max-xl:w-full max-xl:grid-cols-1">
 
@@ -11,25 +39,25 @@
 
       <div class="my-4 w-full relative">
         <img src="./login/user-green.png" alt="" class="absolute left-1 top-3">
-        <input type="text" placeholder="Username" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" />
+        <input type="text" placeholder="Username" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" bind:value={username}/>
       </div>
 
       <div class="my-4 w-full relative">
         <img src="./login/email-green.png" alt="" class="absolute left-1 top-3">
-        <input type="text" placeholder="Email" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" />
+        <input type="text" placeholder="Email" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" bind:value={email}/>
       </div>
 
       <div class="my-4 w-full relative">
         <img src="./login/password-green.png" alt="" class="absolute left-1 top-3">
-        <input type="password" placeholder="Password" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" />
+        <input type="password" placeholder="Password" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" bind:value={password}/>
       </div>
 
       <div class="my-4 w-full relative">
         <img src="./login/password-green.png" alt="" class="absolute left-1 top-3">
-        <input type="password" placeholder="Confirm password" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" />
+        <input type="password" placeholder="Confirm password" class="focus:outline-none py-3 border-b-2 border-[#D3E4CD] pl-10 pr-5 text-[#bad8af] w-[100%] font-semibold" bind:value={confirmPassword}/>
       </div>
 
-      <button class="px-14 py-3 text-lg my-5 bg-[#ADC2A9] font-semibold text-white rounded-4xl hover:bg-[#99a798] duration-200"> Sign up</button>
+      <button class="px-14 py-3 text-lg my-5 bg-[#ADC2A9] font-semibold text-white rounded-4xl hover:bg-[#99a798] duration-200" onclick={handleRegister}> Sign up</button>
       <p class="text-[#99A799] font-semibold text-lg my-3"> Already have an account ?  <a href="/" class="text-[#FFB97C]"> Login </a></p>
     </div>
 
