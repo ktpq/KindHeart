@@ -5,6 +5,7 @@
     import axios from 'axios'
     import Cookies from 'js-cookie'
     import { goto } from '$app/navigation';
+    import { user } from '../../stores';
  
     onMount(() =>{
         AOS.init();
@@ -19,6 +20,11 @@
           const response = await axios.post(`${base_api}/api-token-auth/`, {username: username, password: password})
           const token = response.data.token
           Cookies.set('authToken', token, {expires: 7})
+
+          const responseUser = await axios.get(`${base_api}/api/auth/myprofile`,{
+              headers: { Authorization: `Token ${token}`}
+          })
+          user.set(responseUser.data)
           alert("ล็อคอินสำเร็จ !")
           goto('/')
       } catch (error){

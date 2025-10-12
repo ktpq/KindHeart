@@ -5,33 +5,37 @@
 	let isOpen = $state(false);
 	let isDropDownOpen = $state(false);
 
+	import { user } from '../stores';
+
 	const toggleDropdown = () => {
 		isDropDownOpen = !isDropDownOpen;
 	};
 
 	const handleLogout = () => {
 		Cookies.remove('authToken')
-		goto('/login')
+		user.set(null)
+		// goto('/login')
 	}
 </script>
 
 <nav class="bg-[#D3E4CD] p-5 relative shadow-sm">
 	<section class="w-[90%] mx-auto flex justify-between items-center">
-		<a href="/home" class="font-semibold text-3xl text-[#FFB97C]">
+		<a href="/" class="font-semibold text-3xl text-[#FFB97C]">
 			KindHeart
 		</a>
 
 		<!-- ฝั่งขวา (Desktop) -->
 		<div class="flex items-center justify-end min-w-[250px] max-lg:hidden relative">
-			{#if isLogin}
+			{#if $user}
 				<a href="/notification"><img src="/navbar/bell.png" alt="" width="35" class="cursor-pointer" /></a>
-
+				{JSON.stringify($user)}
 				<div class="ml-7 relative">
 					<button
 						onclick={toggleDropdown}
 						class="flex items-center focus:outline-none cursor-pointer"
 					>
-						<p class="text-[#99A799] font-bold text-xl">kiwvy</p>
+
+						<p class="text-[#99A799] font-bold text-xl">{$user?.username}</p>
 						<img
 							src="/navbar/drop-down.png"
 							alt=""
@@ -70,14 +74,14 @@
 <!-- เมนูมือถือ -->
 {#if isOpen}
 	<div class="bg-[#D3E4CD] p-5 block lg:hidden border-t border-[#ADC2A9] animate-fade-in">
-		{#if isLogin}
+		{#if $user}
 			<div class="flex items-center justify-between">
 				<a href="/notification"><img src="/navbar/bell.png" alt="" width="30" class="cursor-pointer" /></a>
 				<button
 					onclick={toggleDropdown}
 					class="flex items-center focus:outline-none"
 				>
-					<p class="text-[#99A799] font-bold text-xl mr-1">kiwvy</p>
+					<p class="text-[#99A799] font-bold text-xl mr-1">{$user.username}</p>
 					<img
 						src="/navbar/drop-down.png"
 						alt=""
