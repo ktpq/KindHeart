@@ -12,7 +12,7 @@
     </div>
 
     {#if events.length === 0}
-        <p class="mt-5 text-center text-2xl"> Loading...</p>
+        <p class="mt-5 text-center text-2xl"> ยังไม่มีอีเว้นท์ .</p>
     {:else}
         {#each events as event}
             <MyEvent {event} />

@@ -24,7 +24,7 @@
 </script>
 
 <div class="flex items-center space-x-4">
-
+    
     <img src="/create/message.png" alt="" width="50">
     <h1 class="text-4xl font-bold"> Edit Event {data.id}</h1>
 </div>

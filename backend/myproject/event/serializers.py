@@ -10,7 +10,8 @@ class CategorySerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     createdBy = serializers.ReadOnlyField(source='createdBy.id')
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
-    # category_name = CategorySerializer(source = 'category', read_only=True)
+    category_name = CategorySerializer(source = 'category', read_only=True)
+    
     class Meta:
         model = Event
         fields = "__all__"
