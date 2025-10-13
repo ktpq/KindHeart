@@ -10,8 +10,16 @@ export async function load({cookies}){
             headers: { Authorization: `Token ${token}`}
         })
 
+        const userResponse = await axios.get(`${base_api}/api/user/`, {
+            headers: { Authorization: `Token ${token}`}
+        })
+
         return {
-            allEvent: eventResponse.data
+            allEvent: eventResponse.data.events,
+            allUser: userResponse.data.users,
+            userCount: userResponse.data.user_count,
+            eventCount: eventResponse.data.event_count,
+            thismonth_count: eventResponse.data.event_thismonth_count
         }
     } catch (error){
         console.log(error.message)

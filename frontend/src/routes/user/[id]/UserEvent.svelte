@@ -13,16 +13,18 @@
         document.body.style.overflow = "" 
     }
 
+    const base_api = import.meta.env.VITE_API_URL
     
 </script>
-
+<!-- {JSON.stringify(event)} -->
 <div class="border-t-4 border-[#D3E4CD] p-5 flex justify-between items-center my-4 max-lg:flex-col">
+    
     <!-- box ซ้าย -->
     <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
         
-        <p class="text-2xl font-semibold">{event.date} </p>
+        <p class="text-2xl font-semibold">{event.start_time} </p>
         
-        <img src="/home/activity.png" alt="" class="min-w-[100px]" width="150">
+        <img src={`${base_api}${event.img_url}`} alt="" class="min-w-[100px]" width="150">
         <div>
             <p class="text-3xl font-bold font-main"> {event.title} </p>
             <div class="flex items-center space-x-4 mt-3 ">
@@ -46,13 +48,13 @@
     <section class="w-[40%] p-10 font-semibold rounded-2xl shadow-md h-[800px] overflow-y-auto bg-white max-lg:w-[90%] max-sm:mt-30">
         <div class="flex justify-between items-center max-sm:flex-col max-sm:space-y-3">
             <p class="text-3xl font-bold"> {event.title} </p>
-            <p class="bg-[#1AD048] text-white px-5 py-1 rounded-2xl"> {event.category} </p>
+            <p class="bg-[#1AD048] text-white px-5 py-1 rounded-2xl"> {event.category_name.name} </p>
         </div>
         <div class="mt-4 flex items-center space-x-2 max-sm:justify-center">
             <img src="/home/person.png" alt="" width="30">
-            <p class="text-[#8E8B8B]"> {event.author} </p>
+            <p class="text-[#8E8B8B]"> {event.created_by.username} </p>
         </div>
-        <img src="/home/activity.png" alt="" class="w-full mt-4">
+        <img src={`${base_api}${event.img_url}`} alt="" class="w-full mt-4">
 
         <div class="mt-6">
             <p class="text-3xl font-bold"> Description </p>
@@ -67,11 +69,11 @@
         <div class="grid grid-cols-2 gap-3 mt-5 max-sm:flex max-sm:flex-col">
             <div class="flex items-center space-x-4">
                 <img src="/home/time.png" alt="" width="50">
-                <p class="text-3xl"> {event.start_time} - {event.end_time} </p>
+                <p class="text-xl"> {event.start_time} - {event.end_time} </p>
             </div>
             <div class="flex items-center space-x-4">
                 <img src="/home/people.png" alt="" width="50">
-                <p class="text-3xl"> {event.capacity} </p>
+                <p class="text-2xl"> {event.max_capacity} </p>
             </div>
         </div>
 

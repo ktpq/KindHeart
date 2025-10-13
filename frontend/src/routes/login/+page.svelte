@@ -28,8 +28,8 @@
           alert("ล็อคอินสำเร็จ !")
           goto('/')
       } catch (error){
-          if (error){
-            alert("username หรือ password ผิด")
+          if (error.response.status == 400){
+            alert("ไม่สามารถเข้าสู่ระบบได้")
           }
          
       }

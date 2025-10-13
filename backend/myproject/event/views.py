@@ -8,6 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from .serializers import *
 from user.models import *
 from .models import *
+
+from datetime import datetime
 # Create your views here.
 
 import random, string
@@ -19,9 +21,13 @@ class EventListView(APIView):
 
     # แสดง event ทั้งหมด
     def get(self, request):
+        now = datetime.now()
+        if not request.user.is_staff:
+            return Response({"คุณไม่ใช่เจ้าหน้าที่"})
         events = Event.objects.all()
+        events_thismonth = Event.objects.filter(start_time__year= now.year, start_time__month = now.month)
         serializer = EventSerializer(events, many=True)
-        return Response(serializer.data, status=200)
+        return Response({"events": serializer.data, "event_count": events.count(), "event_thismonth_count": events_thismonth.count()}, status=200)
 
     def post(self, request):
         print("Files", request.FILES)
@@ -38,7 +44,8 @@ class EventByOwnerView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, owner_id):
-        if request.user.id != owner_id:
+        user = request.user
+        if request.user.id != owner_id and not user.is_staff:
             return Response({"คุณไม่ใช่เจ้าของ"}, status=404)
         try:
             events = Event.objects.filter(createdBy_id = owner_id)
@@ -90,8 +97,6 @@ class EventUserCanJoin(APIView):
         return Response(serializer.data, status=200)
     
 
-        
-
 class ParticipationView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -116,7 +121,7 @@ class ParticipationEvent(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    # เอาไว้ get user ใน event
+    # เอาไว้ get user ใน event ต่า่งๆ
     def get(self, request, event_id):
         users = Participation.objects.filter(event_id = event_id)
         serializer = MyParticipationSerializer(users, many=True)

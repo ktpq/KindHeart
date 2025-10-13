@@ -45,7 +45,7 @@
 <div class="bg-white flex justify-between items-center p-5 shadow-md rounded-xl hover:-translate-y-1 duration-200 my-3 max-md:flex-col max-md:space-y-3">
     <div>
         <h2 class="text-xl font-bold"> {event.title} </h2>
-        <h3 class="text-lg font-semibold mt-2 text-[#ADC2A9]"> {event.date} </h3>
+        <h3 class="text-lg font-semibold mt-2 text-[#ADC2A9]"> {event.start_time} </h3>
     </div>
     <div class="flex items-center space-x-3">
         <button class="px-5 py-2 text-xl font-semibold  border-gray-200 hover:bg-[#d3d2d2] duration-200 rounded-xl shadow-md cursor-pointer" onclick={() =>{isModalShow = !isModalShow}}> View info </button>

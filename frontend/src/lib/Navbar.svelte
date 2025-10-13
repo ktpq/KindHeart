@@ -98,7 +98,7 @@
 			{#if isDropDownOpen}
 				<div class="mt-3 bg-[#FEF5ED] border border-[#ADC2A9] rounded-lg shadow-md">
 					<a href="/profile" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">Profile</a>
-					<!-- <a href="/myevents" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">My Events</a> -->
+					<a href="/admin" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">admin panel</a>
 					<button class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#d33641]" onclick={handleLogout}>Logout</button>
 				</div>
 			{/if}

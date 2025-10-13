@@ -28,6 +28,14 @@
     }
 
     let allEvent = data.allEvent
+    let allUser = data.allUser
+    let userCount = data.userCount
+    let eventCount = data.eventCount
+    let thisMonthCount = data.thismonth_count
+
+    let notiTile = ""
+    let notiDescription = ""
+    
 
 </script>
 
@@ -53,7 +61,7 @@
             <h2 class="text-xl font-bold"> Total Users in system </h2>
             <img src="/admin/people-red.png" alt="" width="40">
         </div>
-        <h3 class="text-4xl font-bold mt-10 text-[#FE4343]"> 1247</h3>
+        <h3 class="text-4xl font-bold mt-10 text-[#FE4343]"> {userCount} </h3>
     </div>
 
     <div class="shadow-lg rounded-lg p-7 hover:-translate-y-1 duration-200 bg-[#ADC2A9]">
@@ -61,7 +69,7 @@
             <h2 class="text-xl font-bold"> Total Events </h2>
             <img src="/admin/calendar-blue.png" alt="" width="40">
         </div>
-        <h3 class="text-4xl font-bold mt-10 text-[#4359FE]"> 1247</h3>
+        <h3 class="text-4xl font-bold mt-10 text-[#4359FE]"> {eventCount}</h3>
     </div>
 
     <div class="shadow-lg rounded-lg p-7 hover:-translate-y-1 duration-200 bg-[#99A799]">
@@ -69,7 +77,7 @@
             <h2 class="text-xl font-bold"> New Events this month </h2>
             <img src="/admin/graph-yellow.png" alt="" width="40">
         </div>
-        <h3 class="text-4xl font-bold mt-10 text-[#FEF843]"> 12 </h3>
+        <h3 class="text-4xl font-bold mt-10 text-[#FEF843]"> {thisMonthCount}</h3>
     </div>
     
 </div>
@@ -90,7 +98,7 @@
     <div class="mt-8 h-[250px] overflow-auto px-3 max-md:px-0">
         <!-- users or events -->
         {#if isUserShow}
-        <AllUser/>
+        <AllUser allUser = {allUser}/>
         {/if}
         {#if isEventShow}
         <AllEvent allEvent = {allEvent}/>
