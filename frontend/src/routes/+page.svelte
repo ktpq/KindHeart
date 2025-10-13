@@ -16,7 +16,7 @@
 
 <main class="bg-[#FEF5ED] min-h-screen p-5">
     <section class="w-[90%] mx-auto mt-5">
-        {JSON.stringify(data)}
+        <!-- {JSON.stringify(data)} -->
         <div class="flex justify-between items-center max-lg:flex-col">
             <div class="flex space-x-3 max-lg:flex-col max-lg:w-full max-lg:space-y-3">
                 <div class="relative max-lg:w-full">

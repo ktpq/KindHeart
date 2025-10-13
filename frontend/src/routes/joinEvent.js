@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { goto } from "$app/navigation";
 
 export const joinEvent = (event_id) => {
     console.log(event_id)
@@ -18,14 +19,16 @@ export const joinEvent = (event_id) => {
         
         }).then(async (result) => {
         if (result.isConfirmed) {
+            // ยิง api
             const response = await axios.post(`${base_api}/api/participation/`, {event: event_id}, {
                 headers: { Authorization: `Token ${token}` }
             })
+
             console.log(response.data)
             Swal.fire({
-            title: "เข้าร่วมสำเร็จ!",
-            text: "สามารถดูรายละเอียดการเข้าร่วมได้ที่หน้าโปรไฟล์",
-            icon: "success"
+                title: "เข้าร่วมสำเร็จ!",
+                text: "สามารถดูรายละเอียดการเข้าร่วมได้ที่หน้าโปรไฟล์",
+                icon: "success"
             });
         }
         });
