@@ -39,8 +39,9 @@ class EventByOwnerView(APIView):
             return Response({"detail: No events found"}, status=404)
         
 class EventById(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, id):
         try:
             event = Event.objects.get(id = id)

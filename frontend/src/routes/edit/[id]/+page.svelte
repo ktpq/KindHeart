@@ -7,7 +7,6 @@
     let file: File | null = null;
     let previewUrl = ""
     
-    //@ts-ignore
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
         if (selectedFile){
@@ -24,9 +23,9 @@
 </script>
 
 <div class="flex items-center space-x-4">
-    
+    {JSON.stringify(data.event)}
     <img src="/create/message.png" alt="" width="50">
-    <h1 class="text-4xl font-bold"> Edit Event {data.id}</h1>
+    <h1 class="text-4xl font-bold"> Edit Event {data.token}</h1>
 </div>
 
 <p class="text-[#99A799] text-3xl font-semibold mt-5"> Title </p>
