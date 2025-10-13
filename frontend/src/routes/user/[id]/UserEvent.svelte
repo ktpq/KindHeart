@@ -1,6 +1,6 @@
 <script>
+    import Swal from "sweetalert2";
     let { event } = $props()
-    
     let isModalShow = $state(false)
 
     const openModal = () => {

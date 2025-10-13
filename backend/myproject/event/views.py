@@ -10,10 +10,18 @@ from user.models import *
 from .models import *
 # Create your views here.
 
+import random, string
+
 class EventListView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     parser_classes = [parsers.MultiPartParser, parsers.FormParser]
+
+    # แสดง event ทั้งหมด
+    def get(self, request):
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data, status=200)
 
     def post(self, request):
         print("Files", request.FILES)
@@ -23,6 +31,7 @@ class EventListView(APIView):
             return Response(serializer.data, status=201)
         print(serializer.errors)
         return Response(serializer.errors, status=400)
+    
     
 class EventByOwnerView(APIView):
     authentication_classes = [TokenAuthentication]
@@ -59,6 +68,25 @@ class EventById(APIView):
             return Response(serializer.errors, status=400)
         except ObjectDoesNotExist:
             return Response({"detail: No events found"}, status=404)
-    
         
+class EventUserCanJoin(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        events_not_joined = Event.objects.exclude(id__in=Participation.objects.filter(user=user).values_list('event_id', flat=True)
+)
         
+
+class ParticipationView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    # join participation
+    def post(self, request):
+        serializer = ParticipationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user = request.user)
+            return Response(serializer.data, status=201)
+        print(serializer.errors)
+        return Response(serializer.errors, status=400)

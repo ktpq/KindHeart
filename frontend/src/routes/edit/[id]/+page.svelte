@@ -81,7 +81,7 @@
     <img src="/create/message.png" alt="" width="50">
     <h1 class="text-4xl font-bold"> Edit Event</h1>
 </div>
-{JSON.stringify(data.event)}
+<!-- {JSON.stringify(data.event)} -->
 <p class="text-[#99A799] text-3xl font-semibold mt-5"> Title </p>
 <input type="text" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" placeholder="Enter your event title" bind:value={title}>
 
