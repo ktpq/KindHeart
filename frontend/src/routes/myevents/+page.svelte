@@ -1,6 +1,10 @@
 <script>
     import MyEvent from "./MyEvent.svelte";
-    let events = $state([
+    import { onMount } from "svelte";
+    import Cookies from 'js-cookie'
+    import axios from "axios";
+    
+    let events = [
     {
         id: 1,
         date: "3 December 2025",
@@ -73,15 +77,27 @@
         capacity: 500,
         author: "David Lee"
     }
-])
+    ]
+
+
+    // const allEvents = data.events
 </script>
 
+
 <div class="w-[100%] mx-auto p-5">
+    <!-- {JSON.stringify(data.events)} -->
+    <!-- {JSON.stringify($user?.id)} -->
     <div class="flex justify-between items-center pr-5 max-lg:justify-center">
         <p></p>
         <a class="bg-[#AD67E7] text-white font-semibold px-5 py-3 hover:bg-[#5e268d] duration-200 rounded-lg" href="/create"> Create Event</a>
     </div>
+
+    
     {#each events as event}
     <MyEvent event ={event}/>
     {/each}
+    
+    
+    
 </div>
+

@@ -19,7 +19,7 @@
 <div class="border-t-4 border-[#D3E4CD] p-5 flex justify-between items-center my-4 max-lg:flex-col">
     <!-- box ซ้าย -->
     <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
-        <p class="text-2xl font-semibold">{event.date} </p>
+        <p class="text-2xl font-semibold">{event.start_time} </p>
         
         <img src="/home/activity.png" alt="" class="min-w-[100px]" width="150">
         <div>
