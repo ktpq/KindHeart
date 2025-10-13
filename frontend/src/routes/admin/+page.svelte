@@ -1,10 +1,11 @@
 <script>
     import AllUser from "./AllUser.svelte";
     import AllEvent from "./AllEvent.svelte";
-    let isUserShow = $state(true)
-    let isEventShow = $state(false)
+    export let data
+    let isUserShow = true
+    let isEventShow = false
 
-    let isSendNotiShow = $state(false)
+    let isSendNotiShow = false
 
     const openNotiModal = () => {
         isSendNotiShow = true;
@@ -25,12 +26,15 @@
         isUserShow = false
         isEventShow = true
     }
+
+    let allEvent = data.allEvent
+
 </script>
 
 <div>
     <a class="flex items-center space-x-3 cursor-pointer" href="/">
         <img src="/admin/logout.png" alt="" width="40">
-        <p class="text-red-500 font-semibold text-2xl"> Logout </p>
+        <p class="text-red-500 font-semibold text-2xl"> Go back </p>
     </a>
 </div>
 
@@ -89,7 +93,7 @@
         <AllUser/>
         {/if}
         {#if isEventShow}
-        <AllEvent/>
+        <AllEvent allEvent = {allEvent}/>
         {/if}
 
     </div>

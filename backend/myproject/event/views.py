@@ -58,6 +58,7 @@ class EventById(APIView):
             return Response(serializer.data, status = 200)
         except ObjectDoesNotExist:
             return Response({"detail: No events found"}, status=404)
+        
     def put(self, request, id):
         try:
             event = Event.objects.get(id = id)
@@ -66,6 +67,16 @@ class EventById(APIView):
                 serializer.save()
                 return Response(serializer.data, status = 200)
             return Response(serializer.errors, status=400)
+        except ObjectDoesNotExist:
+            return Response({"detail: No events found"}, status=404)
+        
+    def delete(self, request, id):
+        try:
+            if (request.user.is_staff):
+                event = Event.objects.get(id = id)
+                event.delete()
+                return Response({"detail : delete event successfully"}, status=200)
+            return Response({"คุณไม่ใช่ admin"}, status=203)
         except ObjectDoesNotExist:
             return Response({"detail: No events found"}, status=404)
         

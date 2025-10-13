@@ -14,6 +14,7 @@
 	const handleLogout = () => {
 		Cookies.remove('authToken')
 		user.set(null)
+		goto('/')
 		// goto('/login')
 	}
 </script>
@@ -28,7 +29,7 @@
 		<div class="flex items-center justify-end min-w-[250px] max-lg:hidden relative">
 			{#if $user}
 				<a href="/notification"><img src="/navbar/bell.png" alt="" width="35" class="cursor-pointer" /></a>
-				{JSON.stringify($user)}
+				<!-- {JSON.stringify($user)} -->
 				<div class="ml-7 relative">
 					<button
 						onclick={toggleDropdown}
@@ -49,8 +50,10 @@
 							class="absolute right-0 mt-2 w-48 bg-white border border-[#ADC2A9] rounded-lg shadow-lg z-50"
 						>
 							<a href="/profile" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">Profile</a>
-							<!-- <a href="/myevents" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">My Events</a> -->
-							<button class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#d33641]" onclick={handleLogout}>Logout</button>
+						    {#if $user.is_staff}
+							<a href="/admin" class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#5E6D55]">admin panel</a>
+							{/if}
+							<button class="block px-4 py-2 hover:bg-[#D3E4CD] text-[#d33641] w-full text-left" onclick={handleLogout}>Logout</button>
 						</div>
 					{/if}
 				</div>
