@@ -11,7 +11,8 @@ export async function load({ params, cookies }) {
             }
         })
         return {
-            event: response.data
+            event: response.data,
+            id: params.id
         }
     } catch (error){
         console.log(error.message)

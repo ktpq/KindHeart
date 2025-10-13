@@ -27,8 +27,49 @@
     let category = (data.event.category).toString()
     let previewUrl = `${base_api}${data.event.img_url}`
     
-    const handleEdit = () => {
-        
+    const handleEdit = async () => {
+        try{
+            const base_api = import.meta.env.VITE_API_URL
+            const token = Cookies.get('authToken')
+
+            if (title === "" || description === "" || location === "" || start_time === "" || end_time === "" || capacity === "" || category === "") {
+                alert("กรุณากรอกข้อมูลให้ครบถ้วน")
+                return
+            }
+
+            const startDate = new Date(start_time)
+            const endDate = new Date(end_time)
+            const now = new Date()
+
+            if (endDate < startDate) {
+                alert("End time ต้องมากกว่า Start time")
+                return
+            }
+
+            if (now > endDate || now > startDate){
+                alert("ไม่สามารถสร้าง event ในอดีตได้")
+                return 
+            }
+
+            const formData = new FormData()
+            formData.append("title", title)
+            formData.append("description", description)
+            formData.append("location", location)
+            formData.append("start_time", start_time)
+            formData.append("end_time", end_time)
+            formData.append("max_capacity", capacity)
+            formData.append("category", category)
+
+            if (file) formData.append("img_url", file)
+            const response = await axios.put(`${base_api}/api/event/${data.id}/`, formData, {
+                headers :{ Authorization: `Token ${token}`}
+            })
+            alert("อัพเดตสำเร็จ")
+            goto('/myevents')
+        } catch (error){
+            console.log(error.message)
+        }
+
     }
 
    
