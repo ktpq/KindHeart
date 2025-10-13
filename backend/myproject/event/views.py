@@ -77,6 +77,7 @@ class EventUserCanJoin(APIView):
         events_not_joined = Event.objects.exclude(id__in=Participation.objects.filter(user=user).values_list('event_id', flat=True))
         serializer = EventSerializer(events_not_joined, many=True)
         return Response(serializer.data, status=200)
+    
 
         
 
@@ -84,9 +85,16 @@ class ParticipationView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+    # get event ที่ฉันเข้าร่วมเเล้ว
+    def get(self, request):
+        events = Participation.objects.filter(user = request.user)
+        serializer = MyParticipationSerializer(events, many=True)
+        return Response(serializer.data, status=200)
+
     # join participation
     def post(self, request):
         serializer = ParticipationSerializer(data=request.data)
+        
         if serializer.is_valid():
             serializer.save(user = request.user)
             return Response(serializer.data, status=201)

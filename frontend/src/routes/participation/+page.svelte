@@ -1,6 +1,7 @@
 <script>
     import ParticipationEvent from "./ParticipationEvent.svelte";
-    let events = $state([
+    export let data
+    let events = [
     {
         id: 1,
         date: "3 December 2025",
@@ -73,11 +74,14 @@
         capacity: 500,
         author: "David Lee"
     }
-])
+    ]
+
+    let allEvent = data.allEvent
 </script>
 
 <div class="w-[100%] mx-auto p-5">
-    {#each events as event}
+    <!-- {JSON.stringify(data)} -->
+    {#each allEvent as event}
     <ParticipationEvent event ={event}/>
     {/each}
 </div>

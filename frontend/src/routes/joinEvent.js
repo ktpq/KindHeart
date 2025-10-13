@@ -25,6 +25,7 @@ export const joinEvent = (event_id) => {
             })
 
             console.log(response.data)
+            goto('/participation')
             Swal.fire({
                 title: "เข้าร่วมสำเร็จ!",
                 text: "สามารถดูรายละเอียดการเข้าร่วมได้ที่หน้าโปรไฟล์",

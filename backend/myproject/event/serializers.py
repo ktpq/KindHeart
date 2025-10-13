@@ -41,4 +41,17 @@ class ParticipationSerializer(serializers.ModelSerializer):
     # use join participation
     def create(self, validated_data):
         validated_data['ticket_code'] = self.generate_ticket_code()
-        return super().create(validated_data)
+        participation = super().create(validated_data)
+
+        # เพิ่ม now_capacity ของ event
+        event = participation.event
+        event.now_capacity += 1
+        event.save()
+
+        return participation
+    
+class MyParticipationSerializer(serializers.ModelSerializer):
+    event = EventSerializer(read_only=True)
+    class Meta:
+        model = Participation
+        fields = "__all__"
