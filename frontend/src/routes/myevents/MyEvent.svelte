@@ -1,6 +1,9 @@
 <script lang="ts">
-    let { event } = $props()
+    import { onMount } from "svelte";
     import { formatDate, formatDateTime } from "../format";
+    import  Cookies from "js-cookie";
+    import axios from "axios";
+    let { event } = $props()
     let isModalShow = $state(false)
 
     const openModal = () => {
@@ -26,6 +29,21 @@
 
     // สร้างตัวแปร status
     let status = getEventStatus(event.end_time);
+    let users = []
+    onMount(() => {
+        const fetchAllUser = async () => {
+            const base_api = import.meta.env.VITE_API_URL
+            const token = Cookies.get('authToken')
+            const response = await axios.get(`${base_api}/api/participation/event/${event.id}/`, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            console.log(response.data)
+            users = response.data
+        }
+        fetchAllUser()
+    })
 
 
 </script>
@@ -34,6 +52,7 @@
     <!-- box ซ้าย -->
      
     <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
+        
         <p class="text-2xl font-semibold">{formatDate(event.start_time)} </p>
         
         <img src={`${base_api}/${event.img_url}`} alt="" class="min-w-[100px]" width="150">
@@ -75,6 +94,7 @@
 
         <div class="px-5">
             <div class="px-5 mt-4 max-h-[300px] overflow-y-auto max-md:px-0">
+            <!-- {JSON.stringify(users)} -->
             <table class="w-full text-sm md:text-xl table-fixed">
 
 
@@ -87,18 +107,20 @@
                 </tr>
                 </thead>
                 <tbody>
+                {#each users as user}
+                
                 <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2">1</td>
-                    <td class="px-4 py-2">Johndoe</td>
-                    <td class="px-4 py-2">ABCDEFGHFK</td>
-                    <td class="px-4 py-2 text-red-500">Absent</td>
+                    <td class="px-4 py-2">{user.user.id}</td>
+                    <td class="px-4 py-2">{user.user.username}</td>
+                    <td class="px-4 py-2">{user.ticket_code}</td>
+                    {#if user.attended}
+                    <td class="px-4 py-2 text-green-500">attended</td>
+                    {:else}
+                    <td class="px-4 py-2 text-red-500">absent</td>
+                    {/if}
                 </tr>
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2">2</td>
-                    <td class="px-4 py-2">Johndoe</td>
-                    <td class="px-4 py-2">ABCDEFGHFK</td>
-                    <td class="px-4 py-2 text-green-500">Attended</td>
-                </tr>
+                {/each}
+                
                 <!-- เพิ่ม row ตามต้องการ -->
                 </tbody>
             </table>

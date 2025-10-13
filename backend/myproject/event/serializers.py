@@ -28,10 +28,11 @@ class EventEditSerializer(serializers.ModelSerializer):
 
 class ParticipationSerializer(serializers.ModelSerializer):
     ticket_code = serializers.CharField(read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Participation
-        fields = ['event', 'ticket_code']
+        fields = ['event', 'ticket_code', 'user']
 
     def generate_ticket_code(self, length=10):
         characters = string.ascii_uppercase + string.digits
@@ -50,8 +51,10 @@ class ParticipationSerializer(serializers.ModelSerializer):
 
         return participation
     
+    
 class MyParticipationSerializer(serializers.ModelSerializer):
     event = EventSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Participation
         fields = "__all__"

@@ -100,3 +100,13 @@ class ParticipationView(APIView):
             return Response(serializer.data, status=201)
         print(serializer.errors)
         return Response(serializer.errors, status=400)
+    
+class ParticipationEvent(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    # เอาไว้ get user ใน event
+    def get(self, request, event_id):
+        users = Participation.objects.filter(event_id = event_id)
+        serializer = MyParticipationSerializer(users, many=True)
+        return Response(serializer.data, status=200)
