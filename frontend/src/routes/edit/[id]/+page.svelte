@@ -1,11 +1,11 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import axios from 'axios';
-    export let data
     import Cookies from 'js-cookie';
+    export let data
+
     let file: File | null = null;
-    let previewUrl = `${import.meta.env.VITE_API_URL}${data.event.img_url}`;
-    // let previewUrl = ""
+    let previewUrl = ""
     
     //@ts-ignore
     const handleFileChange = (event) => {
@@ -16,63 +16,8 @@
         }
     }
 
-    function toDatetimeLocal(isoString: Date) {
-        const date = new Date(isoString);
-        const offset = date.getTimezoneOffset(); // นาที
-        const localDate = new Date(date.getTime() - offset * 60 * 1000);
-        return localDate.toISOString().slice(0,16); // "YYYY-MM-DDTHH:mm"
-    }
-
-    let title = data.event.title
-    let description = data.event.description
-    let location = data.event.location
-    let start_time = toDatetimeLocal(data.event.start_time)
-    let end_time = toDatetimeLocal(data.event.end_time)
-    let capacity = data.event.max_capacity
-    let category = data.event.category.toString()
-
-    const handleEdit = async () => {
-        try{
-            const base_api = import.meta.env.VITE_API_URL
-            const token = Cookies.get('authToken')
-            if (title === "" || description === "" || location === "" || start_time === "" || end_time === "" || capacity === "" || category === "") {
-                alert("กรุณากรอกข้อมูลให้ครบถ้วน")
-                return
-            }
-
-            // ตรวจสอบ end_time มากกว่าปัจจุบัน
-            const startDate = new Date(start_time)
-            const endDate = new Date(end_time)
-            const now = new Date()
-            if (endDate < startDate) {
-                alert("End time ต้องมากกว่า Start time")
-                return
-            }
-
-            if (now > endDate || now > startDate){
-                alert("ไม่สามารถสร้าง event ในอดีตได้")
-                return 
-            }
-
-            const formData = new FormData()
-            formData.append("title", title)
-            formData.append("description", description)
-            formData.append("location", location)
-            formData.append("start_time", start_time)
-            formData.append("end_time", end_time)
-            formData.append("max_capacity", capacity)
-            formData.append("category", category)
-            if (file) formData.append("img_url", file)
-
-            const response = await axios.put(`${base_api}/api/event/${data.event.id}/`, formData, {
-                headers: { Authorization: `Token ${token}` }
-            })
-            alert("สร้างกิจกรรมสำเร็จ")
-            goto('/myevents')
-        } catch (error){
-            console.log(error)
-        }
-        
+    const handleEdit = () => {
+        console.log("edit")
     }
 
 
@@ -80,43 +25,42 @@
 
 <div class="flex items-center space-x-4">
 
-    <!-- {JSON.stringify(data)} -->
     <img src="/create/message.png" alt="" width="50">
-    <h1 class="text-4xl font-bold"> Edit Event </h1>
+    <h1 class="text-4xl font-bold"> Edit Event {data.id}</h1>
 </div>
 
 <p class="text-[#99A799] text-3xl font-semibold mt-5"> Title </p>
-<input type="text" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" placeholder="Enter your event title" bind:value={title}>
+<input type="text" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" placeholder="Enter your event title">
 
 <p class="text-[#99A799] text-3xl font-semibold mt-5"> Description </p>
-<textarea name="" id="" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD] h-[200px]" placeholder="Enter your description" bind:value={description}></textarea>
+<textarea name="" id="" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD] h-[200px]" placeholder="Enter your description"></textarea>
 
 <p class="text-[#99A799] text-3xl font-semibold mt-5"> Location </p>
-<input type="text" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" placeholder="Enter your event location" bind:value={location}>
+<input type="text" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" placeholder="Enter your event location">
 
 <div class="grid grid-cols-3 gap-10 mt-5 max-md:grid-cols-1 max-md:gap-3">
     <div>
         <p class="text-[#99A799] text-3xl font-semibold mt-5"> Start time </p>
-        <input type="datetime-local" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" bind:value={start_time}>
+        <input type="datetime-local" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]">
     </div>
     <div>
         <p class="text-[#99A799] text-3xl font-semibold mt-5"> End time </p>
-        <input type="datetime-local" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" bind:value={end_time}>
+        <input type="datetime-local" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]">
     </div>
     <div>
         <p class="text-[#99A799] text-3xl font-semibold mt-5"> Capacity </p>
-        <input type="text" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" placeholder="Enter your event capacity" bind:value={capacity}>
+        <input type="text" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" placeholder="Enter your event capacity">
     </div>
 </div>
 
 <p class="text-[#99A799] text-3xl font-semibold mt-5"> Category </p>
-<select name="" id="" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]" bind:value={category}>
+<select name="" id="" class="w-full mt-3 px-5 py-3 rounded-xl focus:outline-none bg-[#D3E4CD]">
     <option value=""> select category </option>
-    <option value=1 class="pr-10">สิ่งแวดล้อม </option>
-    <option value=2 class="pr-10"> สังคมและชุมชน </option>
-    <option value=3 class="pr-10"> การศึกษา </option>
-    <option value=4 class="pr-10"> สุขภาพและการแพทย์ </option>
-    <option value=5 class="pr-10"> จิตอาสาออนไลน์ </option>
+    <option value="1" class="pr-10">สิ่งแวดล้อม </option>
+    <option value="2" class="pr-10"> สังคมและชุมชน </option>
+    <option value="3" class="pr-10"> การศึกษา </option>
+    <option value="4" class="pr-10"> สุขภาพและการแพทย์ </option>
+    <option value="5" class="pr-10"> จิตอาสาออนไลน์ </option>
 </select>
 
 <div class="flex items-center space-x-5 mt-10">
