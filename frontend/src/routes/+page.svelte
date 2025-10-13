@@ -4,9 +4,7 @@
     import { onMount } from 'svelte';
     import 'aos/dist/aos.css';
     import AOS from 'aos'
-
     let allEvent = data.allEvent
-    const myProfile = data.myProfile
     onMount(() =>{
         AOS.init();
     }) 
