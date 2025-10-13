@@ -1,32 +1,34 @@
 <script>
     import NotiCard from "./NotiCard.svelte";
+	export let data
+//    let allNoti = $state([
+// 		{
+// 			id: 1,
+// 			title: "System Maintenance",
+// 			description: "The system will be under maintenance on October 10th from 1:00 AM to 3:00 AM.",
+// 			date: "2025-10-10"
+// 		},
+// 		{
+// 			id: 2,
+// 			title: "New Event Available",
+// 			description: "A new charity event has been added. Join now and make an impact!",
+// 			date: "2025-10-08"
+// 		},
+// 		{
+// 			id: 3,
+// 			title: "Profile Update Reminder",
+// 			description: "Please update your profile information to ensure we can contact you easily.",
+// 			date: "2025-10-05"
+// 		},
+// 		{
+// 			id: 4,
+// 			title: "Thank You for Participating!",
+// 			description: "We appreciate your participation in our recent event. Stay tuned for future updates.",
+// 			date: "2025-10-02"
+// 		}
+// 	]);
 
-   let allNoti = $state([
-		{
-			id: 1,
-			title: "System Maintenance",
-			description: "The system will be under maintenance on October 10th from 1:00 AM to 3:00 AM.",
-			date: "2025-10-10"
-		},
-		{
-			id: 2,
-			title: "New Event Available",
-			description: "A new charity event has been added. Join now and make an impact!",
-			date: "2025-10-08"
-		},
-		{
-			id: 3,
-			title: "Profile Update Reminder",
-			description: "Please update your profile information to ensure we can contact you easily.",
-			date: "2025-10-05"
-		},
-		{
-			id: 4,
-			title: "Thank You for Participating!",
-			description: "We appreciate your participation in our recent event. Stay tuned for future updates.",
-			date: "2025-10-02"
-		}
-	]);
+	let allNoti = data.allNoti
 
 </script>
 
@@ -49,7 +51,7 @@
 
     <!-- notification -->
     <section>
-
+		<!-- {JSON.stringify(allNoti)} -->
         {#each allNoti as noti}
         <NotiCard noti={noti}/>
         {/each}

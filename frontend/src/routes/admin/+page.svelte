@@ -1,6 +1,8 @@
 <script>
     import AllUser from "./AllUser.svelte";
     import AllEvent from "./AllEvent.svelte";
+    import Cookies from 'js-cookie'
+  import axios from "axios";
     export let data
     let isUserShow = true
     let isEventShow = false
@@ -35,6 +37,29 @@
 
     let notiTile = ""
     let notiDescription = ""
+
+    const base_api = import.meta.env.VITE_API_URL
+    const token = Cookies.get('authToken')
+
+    const sendNotification = async () => {
+        if (notiTile === "" || notiDescription === ""){
+            alert("โปรดใส่รายละเอียดแจ้งเตือนให้ครบ")
+            return
+        }
+        try{
+            const response = await axios.post(`${base_api}/api/notification/`, {title: notiTile, description: notiDescription}, {
+                headers: { Authorization: `Token ${token}`}
+            })
+            console.log(response.data)
+            alert("ส่ง notification สำเร็จแล้ว")
+            window.location.reload()
+        } catch (error){
+            console.log(error.message)
+        }
+
+        
+        
+    }
     
 
 </script>
@@ -118,14 +143,14 @@
         <p class="text-md text-gray-500 mt-3"> Enter notification Title and Description </p>
 
         <p class="mt-5 text-xl"> Title </p>
-        <input type="text" class="border w-full mt-3 py-2 text-lg focus:outline-none px-5 border-gray-300 rounded-xl" placeholder="Enter notification title">
+        <input type="text" class="border w-full mt-3 py-2 text-lg focus:outline-none px-5 border-gray-300 rounded-xl" placeholder="Enter notification title" bind:value={notiTile}>
 
         <p class="mt-5 text-xl"> Description </p>
-        <textarea name="" id="" class="border w-full mt-3 py-2 text-lg focus:outline-none px-5 border-gray-300 rounded-xl" placeholder="Enter notification description"></textarea>
+        <textarea name="" id="" class="border w-full mt-3 py-2 text-lg focus:outline-none px-5 border-gray-300 rounded-xl" placeholder="Enter notification description" bind:value={notiDescription}></textarea>
 
         <div class="flex justify-end items-center space-x-4 mt-4">
             <button class="btn-white" onclick={closeNotiModal}>Cancel</button>
-            <button class="btn-orange">Send</button>
+            <button class="btn-orange" onclick={sendNotification}>Send</button>
         </div>
     </section>
 </div>

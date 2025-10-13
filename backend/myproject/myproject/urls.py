@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/', include('user.urls')),
     path('api/', include('authen.urls')),
     path('api/', include('event.urls')),
+    path('api/', include('notification.urls')),
     path('api-token-auth/', views.obtain_auth_token)
 ]
 

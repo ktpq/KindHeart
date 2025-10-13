@@ -11,6 +11,6 @@
         <!-- <button class="cursor-pointer hover:bg-[#d2e4cc] duration-200 rounded-[100%]"> <img src="/notification/red-trash.png" alt="" class="p-1" width="40"> </button> -->
     </div>
     <p class="ml-13 mt-2 text-gray-500"> {noti.description} </p>
-    <p class="ml-13 mt-2 text-gray-500"> {noti.date} </p>
+    <p class="ml-13 mt-2 text-gray-500"> {noti.created_at} </p>
     
 </div>
