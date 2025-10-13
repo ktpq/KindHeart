@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     let { event } = $props()
-    
+    import { formatDate, formatDateTime } from "../format";
     let isModalShow = $state(false)
 
     const openModal = () => {
@@ -12,24 +12,41 @@
         isModalShow = false
         document.body.style.overflow = "" 
     }
+    const base_api = import.meta.env.VITE_API_URL
 
-    
+    const getEventStatus = (end_time: string) => {
+        const now = new Date();
+        const end = new Date(end_time);
+        if (now > end) {
+            return { text: "Success", bg: "#BCF5C5", color: "#00E043" }; // สีเขียว
+        } else {
+            return { text: "On-going", bg: "#FFD966", color: "#E08900" }; // สีส้ม
+        }
+    };
+
+    // สร้างตัวแปร status
+    let status = getEventStatus(event.end_time);
+
+
 </script>
 
 <div class="border-t-4 border-[#D3E4CD] p-5 flex justify-between items-center my-4 max-lg:flex-col">
     <!-- box ซ้าย -->
+     
     <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
-        <p class="text-2xl font-semibold">{event.start_time} </p>
+        <p class="text-2xl font-semibold">{formatDate(event.start_time)} </p>
         
-        <img src="/home/activity.png" alt="" class="min-w-[100px]" width="150">
+        <img src={`${base_api}/${event.img_url}`} alt="" class="min-w-[100px]" width="150">
         <div>
             <div class="flex items-center space-x-3 max-sm:flex-col max-sm:space-y-3">
                 <p class="text-3xl font-bold font-main"> {event.title}  </p> 
-                <p class="text-lg px-4 py-1 bg-[#BCF5C5] text-[#00E043] rounded-3xl"> success </p>
+                <p class="text-lg px-4 py-1 rounded-3xl" style="background-color: {status.bg}; color: {status.color}">
+                    {status.text}
+                </p>
             </div>
             <div class="flex items-center space-x-4 mt-3 ">
                 <img src="/home/location.png" alt="" width="30">
-                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {event.start_time} - {event.end_time} </p>
+                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {formatDateTime(event.start_time)} - {formatDateTime(event.end_time)} </p>
             </div>
         </div>
     </div>

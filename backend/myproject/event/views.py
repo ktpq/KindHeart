@@ -25,10 +25,12 @@ class EventListView(APIView):
         return Response(serializer.errors, status=400)
     
 class EventByOwnerView(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, owner_id):
+        if request.user.id != owner_id:
+            return Response({"คุณไม่ใช่เจ้าของ"}, status=404)
         try:
             events = Event.objects.filter(createdBy_id = owner_id)
             serializer = EventSerializer(events, many= True)

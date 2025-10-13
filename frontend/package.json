@@ -26,6 +26,7 @@
 	"dependencies": {
 		"aos": "^2.3.4",
 		"axios": "^1.12.2",
+		"date-fns": "^4.1.0",
 		"js-cookie": "^3.0.5"
 	}
 }

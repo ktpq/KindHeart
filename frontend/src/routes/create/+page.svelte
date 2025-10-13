@@ -36,9 +36,15 @@
         // ตรวจสอบ end_time มากกว่าปัจจุบัน
         const startDate = new Date(start_time)
         const endDate = new Date(end_time)
+        const now = new Date()
         if (endDate < startDate) {
-            alert("End time ต้องมากกว่าปัจจุบัน")
+            alert("End time ต้องมากกว่า Start time")
             return
+        }
+
+        if (now > endDate || now > startDate){
+            alert("ไม่สามารถสร้าง event ในอดีตได้")
+            return 
         }
 
         // สร้าง FormData
