@@ -38,4 +38,26 @@ class EventByOwnerView(APIView):
         except ObjectDoesNotExist:
             return Response({"detail: No events found"}, status=404)
         
+class EventById(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request, id):
+        try:
+            event = Event.objects.get(id = id)
+            serializer = EventSerializer(event)
+            return Response(serializer.data, status = 200)
+        except ObjectDoesNotExist:
+            return Response({"detail: No events found"}, status=404)
+    def put(self, request, id):
+        try:
+            eventInstance =  Event.objects.get(id = id)
+            serializer = EventSerializer(instance = eventInstance, data = request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response("Edit event success", status=200)
+            return Response(serializer.errors, status=400)
+
+        except ObjectDoesNotExist:
+            return Response({"detail: No events found"}, status=404)
+        
         
