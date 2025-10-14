@@ -92,7 +92,10 @@ class EventUserCanJoin(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         user = request.user
-        events_not_joined = Event.objects.exclude(id__in=Participation.objects.filter(user=user).values_list('event_id', flat=True))
+        events_not_joined = Event.objects.exclude(
+            id__in=Participation.objects.filter(user=user).values_list('event_id', flat=True)
+        ).exclude(createdBy=user)
+            
         serializer = EventSerializer(events_not_joined, many=True)
         return Response(serializer.data, status=200)
     
