@@ -79,9 +79,11 @@
 
 <!-- Event modal -->
 {#if isModalShow}
+
 <div class="fixed inset-0 bg-black/50 z-40"></div>
 <div class="fixed inset-0 flex items-center justify-center z-50">
     <section class="w-[50%] max-lg:p-3 p-10 font-semibold rounded-2xl shadow-md h-[500px] bg-white max-lg:w-[90%] max-sm:mt-30">
+        {JSON.stringify(users)}
         <div class="flex justify-between items-center px-5">
             <p></p>
             <h1 class="text-center text-4xl text-[#FFB97C] font-semibold"> Participants </h1>
@@ -108,7 +110,6 @@
                 </thead>
                 <tbody>
                 {#each users as user}
-                
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2">{user.user.id}</td>
                     <td class="px-4 py-2">{user.user.username}</td>
