@@ -20,7 +20,7 @@
 <nav class="bg-white shadow-md p-5">
 	<section class="w-full max-w-6xl mx-auto flex justify-between items-center">
 		<a href="/" class="font-bold text-3xl text-blue-600">
-			KindHeart
+			KindHeart 🩷
 		</a>
 
 		<!-- Desktop Menu -->

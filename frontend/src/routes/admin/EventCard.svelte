@@ -54,51 +54,65 @@
 </div>
 
 {#if isModalShow}
-<div class="fixed inset-0 bg-black/50 z-40"></div>
-<div class="fixed inset-0 flex items-center justify-center z-50">
-    <section class="w-[40%] p-10 font-semibold rounded-2xl shadow-md h-[800px] overflow-y-auto bg-white max-lg:w-[90%] max-sm:mt-30">
-        <div class="flex justify-between items-center max-sm:flex-col max-sm:space-y-3">
-            <p class="text-3xl font-bold"> {event.title} </p> 
-            <p class="bg-[#1AD048] text-white px-5 py-1 rounded-2xl"> {event.category_name.name} </p>
-        </div>
-        <div class="mt-4 flex items-center space-x-2 max-sm:justify-center">
-            <img src="/home/person.png" alt="" width="30">
-            <p class="text-[#8E8B8B]"> {event.created_by.username} </p>
-        </div>
-        <img src={`${base_api}${event.img_url}`} alt="" class="w-full mt-4">
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4">
+    <!-- Background overlay -->
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick={closeModal}></div>
 
-        <div class="mt-6">
-            <p class="text-3xl font-bold"> Description </p>
-            <p class="mt-3 text-[#8E8B8B]"> {event.description}</p>
+    <!-- Modal content -->
+    <section class="relative bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh] p-8 space-y-6 z-10">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center flex-wrap gap-4">
+            <h2 class="text-3xl font-bold text-blue-800">{event.title}</h2>
+            <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">{event.category_name.name}</span>
         </div>
 
-        <div class="mt-6">
-            <p class="text-3xl font-bold"> Location </p>
-            <p class="mt-3 text-[#8E8B8B]"> {event.location} </p>
+        <!-- Created by -->
+        <div class="flex items-center gap-2 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span>{event.created_by.username}</span>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 mt-5 max-sm:flex max-sm:flex-col">
-            <div class="items-center space-x-4 flex">
-                <img src="/home/time.png" alt="" width="50">
-                <div>
-                    <p class="text-lg"> start :{event.start_datetime}</p>
-                    <p class="text-lg"> end : {event.end_datetime} </p>
-                </div>
+        <!-- Event Image -->
+        <img src={`${base_api}${event.img_url}`} alt={event.title} class="w-full rounded-xl shadow-md object-cover mt-4">
+
+        <!-- Description -->
+        <div>
+            <p class="text-blue-800 font-semibold mb-1">Description</p>
+            <p class="text-gray-600">{event.description}</p>
+        </div>
+
+        <!-- Location -->
+        <div>
+            <p class="text-blue-800 font-semibold mb-1">Location</p>
+            <p class="text-gray-600">{event.location}</p>
+        </div>
+
+        <!-- Event Details -->
+        <div class="grid grid-cols-3 gap-4 text-center mt-5 max-sm:grid-cols-1">
+            <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                <p class="text-sm text-gray-500">Start</p>
+                <p class="font-semibold text-blue-700">{event.start_datetime}</p>
             </div>
-            <div class="flex items-center space-x-4">
-                <img src="/home/people.png" alt="" width="50">
-                <p class="text-2xl"> {event.max_capacity} </p>
+            <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                <p class="text-sm text-gray-500">End</p>
+                <p class="font-semibold text-blue-700">{event.end_datetime}</p>
+            </div>
+            <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                <p class="text-sm text-gray-500">Max Capacity</p>
+                <p class="font-semibold text-blue-700">{event.max_capacity}</p>
             </div>
         </div>
 
-        <div class="max-sm:flex max-sm:flex-col max-sm:gap-0">
-            <button class="w-full max-sm:my-2 shadow-md my-5 py-3 border-2 text-[#8E8B8B] font-bold text-xl hover:bg-[#f1f1f1] duration-200 rounded-lg" onclick={() => {isModalShow = false}}>
-            Close
+        <!-- Action Button -->
+        <div class="flex justify-end mt-6">
+            <button class="px-5 py-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600 duration-200" onclick={() => {isModalShow = false}}>
+                Close
             </button>
-            <!-- <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 text-white bg-[#FFB97C] font-bold text-xl hover:bg-[#d89458] duration-200 rounded-lg">
-            Join us 
-            </button> -->
         </div>
+
     </section>
 </div>
 {/if}

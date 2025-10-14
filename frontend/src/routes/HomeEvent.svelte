@@ -58,70 +58,79 @@
 </div>
 
 {#if isModalShow}
-<div class="fixed inset-0 z-50 flex items-center justify-center px-4">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick={closeModal}></div>
+<div class="fixed inset-0 z-50 flex items-center justify-center">
+    <!-- Background overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
 
-    <div class="relative bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-y-auto max-h-[90vh] p-8 animate-fadeIn">
-        <div class="flex justify-between items-center flex-wrap gap-4">
-            <h2 class="text-4xl font-bold text-gray-900">{event.title}</h2>
-            <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">{event.category_name.name}</span>
+    <!-- Modal content -->
+    <section class="relative bg-white rounded-2xl shadow-2xl w-[40%] max-lg:w-[90%] p-6 overflow-y-auto max-h-[90vh] z-10 space-y-6">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center">
+            <p class="text-2xl font-bold text-blue-800">{event.title}</p>
+            <span class="bg-blue-500 text-white px-4 py-1 rounded-2xl text-sm font-medium">{event.category_name.name}</span>
         </div>
 
-        <div class="flex items-center gap-2 mt-3 text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1118.879 6.196 9 9 0 015.121 17.804z"/>
+        <!-- Created by -->
+        <div class="flex items-center space-x-2 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
             </svg>
-            <span>{event.created_by.username}</span>
+            <p>{event.created_by.username}</p>
         </div>
 
-        <img src={`${base_api}${event.img_url}`} alt="activity" class="w-full mt-6 rounded-xl shadow-md object-cover">
+        <!-- Event Image -->
+        <img src={`${base_api}${event.img_url}`} alt={event.title} class="w-full rounded-lg shadow-md object-cover">
 
-        <div class="mt-6">
-            <h3 class="text-2xl font-bold text-gray-800">Description</h3>
-            <p class="mt-2 text-gray-600 leading-relaxed">{event.description}</p>
+        <!-- Description -->
+        <div>
+            <p class="text-blue-800 font-semibold mb-1">Description</p>
+            <p class="text-gray-600">{event.description}</p>
         </div>
 
-        <div class="mt-6">
-            <h3 class="text-2xl font-bold text-gray-800">Location</h3>
-            <p class="mt-2 text-gray-600">{event.location}</p>
+        <!-- Location -->
+        <div>
+            <p class="text-blue-800 font-semibold mb-1">Location</p>
+            <p class="text-gray-600">{event.location}</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 mt-6 max-sm:grid-cols-1">
-            <div class="flex items-center gap-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/>
-                </svg>
-                <div>
-                    <p class="text-gray-700 font-medium">Start: {event.start_datetime}</p>
-                    <p class="text-gray-700 font-medium">End: {event.end_datetime}</p>
-                </div>
+        <!-- Event Details -->
+        <div class="grid grid-cols-3 gap-4 text-center">
+            <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                <p class="text-sm text-gray-500">Start</p>
+                <p class="font-semibold text-blue-700">{event.start_datetime}</p>
             </div>
-            <div class="flex items-center gap-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M19 3v4M5 21h14a2 2 0 002-2V7H3v12a2 2 0 002 2z"/>
-                </svg>
-                <p class="text-3xl font-bold text-gray-900">{event.max_capacity}</p>
+            <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                <p class="text-sm text-gray-500">End</p>
+                <p class="font-semibold text-blue-700">{event.end_datetime}</p>
+            </div>
+            <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                <p class="text-sm text-gray-500">Max Capacity</p>
+                <p class="font-semibold text-blue-700">{event.max_capacity}</p>
             </div>
         </div>
 
-        <div class="flex gap-4 mt-8 max-sm:flex-col">
-            <button class="flex-1 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition duration-200" onclick={closeModal}>
-                Cancel
+        <!-- Action buttons -->
+        <div class="flex justify-end gap-4 mt-6 max-sm:flex-col">
+            <button class="px-5 py-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600 duration-200" onclick={closeModal}>
+                Close
             </button>
 
             {#if event.now_capacity < event.max_capacity}
-                <button class="flex-1 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200" onclick={() => joinEvent(event.id)}>
+                <button class="px-5 py-2 bg-blue-500 text-white rounded-lg font-bold shadow-md hover:bg-blue-600 duration-200" onclick={() => joinEvent(event.id)}>
                     Join us
                 </button>
             {:else}
-                <button class="flex-1 py-3 bg-gray-300 text-gray-600 font-semibold rounded-lg cursor-not-allowed">
+                <button class="px-5 py-2 bg-gray-300 text-gray-600 rounded-lg font-bold shadow-sm cursor-not-allowed">
                     Full
                 </button>
             {/if}
         </div>
-    </div>
+
+    </section>
 </div>
 {/if}
+
 
 <style>
     @keyframes fadeIn { 0% { opacity:0; transform:translateY(-10px);} 100% {opacity:1; transform:translateY(0);} }

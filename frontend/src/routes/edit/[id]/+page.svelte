@@ -95,41 +95,41 @@
 
     <!-- Title -->
     <div class="mb-5">
-        <label class="text-blue-600 text-2xl font-semibold">Title</label>
+        <p class="text-blue-600 text-2xl font-semibold">Title</p>
         <input type="text" class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm" placeholder="Enter your event title" bind:value={title}>
     </div>
 
     <!-- Description -->
     <div class="mb-5">
-        <label class="text-blue-600 text-2xl font-semibold">Description</label>
+        <p class="text-blue-600 text-2xl font-semibold">Description</p>
         <textarea class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm h-40" placeholder="Enter your description" bind:value={description}></textarea>
     </div>
 
     <!-- Location -->
     <div class="mb-5">
-        <label class="text-blue-600 text-2xl font-semibold">Location</label>
+        <p class="text-blue-600 text-2xl font-semibold">Location</p>
         <input type="text" class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm" placeholder="Enter your event location" bind:value={location}>
     </div>
 
     <!-- Time & Capacity -->
     <div class="grid grid-cols-3 gap-6 mb-5 max-md:grid-cols-1">
         <div>
-            <label class="text-blue-600 text-2xl font-semibold">Start Time</label>
+            <p class="text-blue-600 text-2xl font-semibold">Start Time</p>
             <input type="datetime-local" class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm" bind:value={start_time}>
         </div>
         <div>
-            <label class="text-blue-600 text-2xl font-semibold">End Time</label>
+            <p class="text-blue-600 text-2xl font-semibold">End Time</p>
             <input type="datetime-local" class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm" bind:value={end_time}>
         </div>
         <div>
-            <label class="text-blue-600 text-2xl font-semibold">Capacity</label>
+            <p class="text-blue-600 text-2xl font-semibold">Capacity</p>
             <input type="text" class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm" placeholder="Enter your event capacity" bind:value={capacity}>
         </div>
     </div>
 
     <!-- Category -->
     <div class="mb-5">
-        <label class="text-blue-600 text-2xl font-semibold">Category</label>
+        <p class="text-blue-600 text-2xl font-semibold">Category</p>
         <select class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm" bind:value={category}>
             <option value="">Select category</option>
             <option value="1">สิ่งแวดล้อม</option>
@@ -142,18 +142,18 @@
 
     <!-- Upload Image -->
     <div class="mb-5">
-        <label class="text-blue-600 text-2xl font-semibold mb-2 block">Upload Image</label>
+        <p class="text-blue-600 text-2xl font-semibold mb-2 block">Upload Image</p>
         <div class="flex items-center space-x-5">
             {#if previewUrl}
-                <label for="file" class="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md cursor-pointer hover:bg-red-600 transition font-bold">
+                <p class="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md cursor-pointer hover:bg-red-600 transition font-bold">
                     Change Image
-                </label>
+                </p>
             {/if}
         </div>
         <input type="file" id="file" class="hidden" accept="image/*" onchange={handleFileChange}/>
         <div class="mt-3 border-2 border-dashed border-blue-200 rounded-2xl h-40 flex justify-center items-center bg-blue-50 shadow-sm">
             {#if !previewUrl}
-                <label for="file" class="text-blue-400 font-semibold cursor-pointer">Add Image</label>
+                <p class="text-blue-400 font-semibold cursor-pointer">Add Image</p>
             {/if}
             {#if previewUrl}
                 <img src={previewUrl} alt="preview" class="w-[150px] h-[150px] object-contain rounded-lg"/>

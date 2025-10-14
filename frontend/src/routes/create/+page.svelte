@@ -2,6 +2,7 @@
     import axios from "axios";
     import Cookies from 'js-cookie'
     import { goto } from "$app/navigation";
+    import Swal from 'sweetalert2';
     let file: File | null = null;
     let previewUrl = "";
 
@@ -58,7 +59,10 @@
                 headers: { Authorization: `Token ${token}` }
             })
 
-            alert("สร้างกิจกรรมสำเร็จ")
+            Swal.fire({
+                title: "สร้างกิจกรรมสำเร็จ!",
+                icon: "success"
+            })
             goto('/myevents')
 
         } catch (error) {

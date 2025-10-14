@@ -5,7 +5,7 @@
 	let allNoti = data.allNoti;
 </script>
 
-<main class="p-8 bg-white min-h-screen">
+<main class="p-8 bg-white min-h-screen rounded-2xl shadow-lg">
 	<!-- Header -->
 	<section class="flex items-center space-x-5 mb-10">
 		<button
