@@ -14,11 +14,6 @@ from datetime import datetime
 
 import random, string
 
-class EventListNoPermission(APIView):
-    def get(self, request):
-        events = Event.objects.all()
-        serializer = EventSerializer(events, many=True)
-        return Response({"events": serializer.data}, status=200)
 
 class EventListView(APIView):
     authentication_classes = [TokenAuthentication]
@@ -31,7 +26,7 @@ class EventListView(APIView):
         if not request.user.is_staff:
             return Response({"คุณไม่ใช่เจ้าหน้าที่"})
         events = Event.objects.all()
-        events_thismonth = Event.objects.filter(start_time__year= now.year, start_time__month = now.month)
+        events_thismonth = Event.objects.filter(start_time__year= now.year, start_time__month = now.month).order_by('-start_time')
         serializer = EventSerializer(events, many=True)
         return Response({"events": serializer.data, "event_count": events.count(), "event_thismonth_count": events_thismonth.count()}, status=200)
 
@@ -54,7 +49,7 @@ class EventByOwnerView(APIView):
         if request.user.id != owner_id and not user.is_staff:
             return Response({"คุณไม่ใช่เจ้าของ"}, status=404)
         try:
-            events = Event.objects.filter(createdBy_id = owner_id)
+            events = Event.objects.filter(createdBy_id = owner_id).order_by('start_time')
             serializer = EventSerializer(events, many= True)
             return Response(serializer.data, status = 200)
         except ObjectDoesNotExist:
@@ -100,7 +95,7 @@ class EventUserCanJoin(APIView):
         user = request.user
         events_not_joined = Event.objects.exclude(
             id__in=Participation.objects.filter(user=user).values_list('event_id', flat=True)
-        ).exclude(createdBy=user)
+        ).exclude(createdBy=user).order_by('start_time')
             
         serializer = EventSerializer(events_not_joined, many=True)
         return Response(serializer.data, status=200)
@@ -112,7 +107,7 @@ class ParticipationView(APIView):
 
     # get event ที่ฉันเข้าร่วมเเล้ว
     def get(self, request):
-        events = Participation.objects.filter(user = request.user)
+        events = Participation.objects.filter(user = request.user).order_by('-event__end_time', '-event__start_time')
         serializer = MyParticipationSerializer(events, many=True)
         return Response(serializer.data, status=200)
 

@@ -16,6 +16,9 @@ class UserList(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
+        
+        if not request.user.is_staff:
+            return Response({"คุณไม่ใช่เจ้าหน้าที่"})
         users = User.objects.all()
         if not request.user.is_staff:
             return Response({"คุณไม่ใช่เจ้าหน้าที่"})
@@ -23,6 +26,8 @@ class UserList(APIView):
         return Response({"users": serializer.data, "user_count": users.count()}, status=200)
 
 class UserDetail(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, id):
         user = User.objects.get(id=id)
         serializer = UserSerializer(user)
@@ -52,8 +57,6 @@ class UserPermission(APIView):
         
         return Response({"detail update user permission successfully"})
         
-    
-
 
 
 class ChangePasswordView(APIView):

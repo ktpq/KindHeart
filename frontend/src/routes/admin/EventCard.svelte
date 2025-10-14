@@ -45,7 +45,7 @@
 <div class="bg-white flex justify-between items-center p-5 shadow-md rounded-xl hover:-translate-y-1 duration-200 my-3 max-md:flex-col max-md:space-y-3">
     <div>
         <h2 class="text-xl font-bold"> {event.title} </h2>
-        <h3 class="text-lg font-semibold mt-2 text-[#ADC2A9]"> {event.start_time} </h3>
+        <h3 class="text-lg font-semibold mt-2 text-[#ADC2A9]"> {event.start_datetime} </h3>
     </div>
     <div class="flex items-center space-x-3">
         <button class="px-5 py-2 text-xl font-semibold  border-gray-200 hover:bg-[#d3d2d2] duration-200 rounded-xl shadow-md cursor-pointer" onclick={() =>{isModalShow = !isModalShow}}> View info </button>
@@ -78,9 +78,12 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-5 max-sm:flex max-sm:flex-col">
-            <div class="flex items-center space-x-4">
+            <div class="items-center space-x-4 flex">
                 <img src="/home/time.png" alt="" width="50">
-                <p class="text-xl"> {event.start_time} - {event.end_time} </p>
+                <div>
+                    <p class="text-lg"> start :{event.start_datetime}</p>
+                    <p class="text-lg"> end : {event.end_datetime} </p>
+                </div>
             </div>
             <div class="flex items-center space-x-4">
                 <img src="/home/people.png" alt="" width="50">

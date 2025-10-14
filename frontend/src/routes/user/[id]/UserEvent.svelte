@@ -22,14 +22,14 @@
     <!-- box ซ้าย -->
     <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
         
-        <p class="text-2xl font-semibold">{event.start_time} </p>
+        <p class="text-2xl font-semibold">{event.start_date} </p>
         
         <img src={`${base_api}${event.img_url}`} alt="" class="min-w-[100px]" width="150">
         <div>
             <p class="text-3xl font-bold font-main"> {event.title} </p>
             <div class="flex items-center space-x-4 mt-3 ">
                 <img src="/home/location.png" alt="" width="30">
-                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {event.start_time} - {event.end_time} </p>
+                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {event.start_datetime} - {event.end_datetime} </p>
             </div>
         </div>
     </div>
@@ -67,9 +67,12 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3 mt-5 max-sm:flex max-sm:flex-col">
-            <div class="flex items-center space-x-4">
+            <div class="items-center space-x-4 flex">
                 <img src="/home/time.png" alt="" width="50">
-                <p class="text-xl"> {event.start_time} - {event.end_time} </p>
+                <div>
+                    <p class="text-lg"> start :{event.start_datetime}</p>
+                    <p class="text-lg"> end : {event.end_datetime} </p>
+                </div>
             </div>
             <div class="flex items-center space-x-4">
                 <img src="/home/people.png" alt="" width="50">

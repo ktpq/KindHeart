@@ -12,12 +12,27 @@ class CategorySerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     createdBy = serializers.ReadOnlyField(source='createdBy.id')
     category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
-    category_name = CategorySerializer(source = 'category', read_only=True)
+    category_name = CategorySerializer(source='category', read_only=True)
     created_by = UserSerializer(source="createdBy", read_only=True)
+
+    # ฟิลด์ใหม่สำหรับวันที่และเวลาที่อ่านง่าย
+    start_date = serializers.SerializerMethodField()
+    start_datetime = serializers.SerializerMethodField()
+    end_datetime = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
         fields = "__all__"
+
+    def get_start_date(self, obj):
+        return obj.start_time.strftime("%d/%m/%Y")  # วัน/เดือน/ปี
+
+    def get_start_datetime(self, obj):
+        return obj.start_time.strftime("%d/%m/%Y %H:%M")  # วัน/เดือน/ปี + เวลา
+
+    def get_end_datetime(self, obj):
+        return obj.end_time.strftime("%d/%m/%Y %H:%M")  # วัน/เดือน/ปี + เวลา
+
 
 class EventEditSerializer(serializers.ModelSerializer):
     class Meta:

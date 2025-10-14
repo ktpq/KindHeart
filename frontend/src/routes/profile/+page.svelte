@@ -96,19 +96,19 @@
         <p class="mt-10 text-2xl font-semibold text-[#99A799]"> Current Password </p>
         <div class="relative">
             <img src="/login/password-green.png" alt="" width="25" class="absolute top-5 left-2">
-            <input type="text" class="pl-15 pr-5 py-2 mt-3 bg-[#D3E4CD] focus:outline-none text-xl w-full rounded-lg" placeholder="Enter current password" bind:value={currentPassword}>
+            <input type="password" class="pl-15 pr-5 py-2 mt-3 bg-[#D3E4CD] focus:outline-none text-xl w-full rounded-lg" placeholder="Enter current password" bind:value={currentPassword}>
         </div>
 
         <p class="mt-10 text-2xl font-semibold text-[#99A799]"> New Password </p>
         <div class="relative">
             <img src="/login/password-green.png" alt="" width="25" class="absolute top-5 left-2">
-            <input type="text" class="pl-15 pr-5 py-2 mt-3 bg-[#D3E4CD] focus:outline-none text-xl w-full rounded-lg" placeholder="Enter new password" bind:value={newPassword}>
+            <input type="password" class="pl-15 pr-5 py-2 mt-3 bg-[#D3E4CD] focus:outline-none text-xl w-full rounded-lg" placeholder="Enter new password" bind:value={newPassword}>
         </div>
 
         <p class="mt-5 text-2xl font-semibold text-[#99A799]"> Confirm New Password </p>
         <div class="relative">
             <img src="/login/password-green.png" alt="" width="25" class="absolute top-5 left-2">
-            <input type="text" class="pl-15 pr-5 py-2 mt-3 bg-[#D3E4CD] focus:outline-none text-xl w-full rounded-lg" placeholder="Enter confirm new password" bind:value={netPasswordConfirm}>
+            <input type="password" class="pl-15 pr-5 py-2 mt-3 bg-[#D3E4CD] focus:outline-none text-xl w-full rounded-lg" placeholder="Enter confirm new password" bind:value={netPasswordConfirm}>
         </div>
 
         <button class="shadow-md mt-5 py-2 bg-[#AD67E7] text-white font-semibold rounded-lg duration-200 hover:bg-[#8844c0] cursor-pointer flex items-center w-full justify-center space-x-3" onclick={handleChangePassword}>

@@ -69,7 +69,7 @@
      
     <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
         
-        <p class="text-2xl font-semibold">{formatDate(event.start_time)} </p>
+        <p class="text-2xl font-semibold">{event.start_date} </p>
         
         <img src={`${base_api}/${event.img_url}`} alt="" class="min-w-[100px]" width="150">
         <div>
@@ -81,7 +81,7 @@
             </div>
             <div class="flex items-center space-x-4 mt-3 ">
                 <img src="/home/location.png" alt="" width="30">
-                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {formatDateTime(event.start_time)} - {formatDateTime(event.end_time)} </p>
+                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {event.start_datetime} - {event.end_datetime} </p>
             </div>
         </div>
     </div>
