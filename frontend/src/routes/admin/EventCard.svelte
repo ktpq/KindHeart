@@ -56,7 +56,7 @@
 {#if isModalShow}
 <div class="fixed inset-0 z-50 flex items-center justify-center px-4">
     <!-- Background overlay -->
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick={closeModal}></div>
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
 
     <!-- Modal content -->
     <section class="relative bg-white w-full max-w-3xl rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh] p-8 space-y-6 z-10">

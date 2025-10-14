@@ -45,7 +45,7 @@
 		</div>
 
         <!-- Page Header -->
-        <h1 class="text-[48px] font-bold text-center text-blue-900 mb-2">Account Settings</h1>
+        <h1 class="text-[48px] font-bold text-center text-blue-900 mb-2">Account Settings 🩷</h1>
         <p class="text-blue-700 text-center text-lg mb-10">Manage your account information securely</p>
 
         <!-- Render the page content -->

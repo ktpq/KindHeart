@@ -46,7 +46,7 @@
 		</div>
 
         <!-- Page Header -->
-        <h1 class="text-[48px] font-bold text-center text-blue-900 mb-2">Event Participation</h1>
+        <h1 class="text-[48px] font-bold text-center text-blue-900 mb-2">Event 🩷</h1>
         <p class="text-blue-700 text-center text-lg mb-10">Your participation record and upcoming events</p>
 
         <!-- Render the page content -->
