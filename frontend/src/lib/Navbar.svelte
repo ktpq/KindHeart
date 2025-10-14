@@ -14,7 +14,7 @@
 	const handleLogout = () => {
 		Cookies.remove('authToken')
 		user.set(null)
-		goto('/')
+		goto('/login')
 		// goto('/login')
 	}
 </script>

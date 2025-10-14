@@ -40,6 +40,7 @@
         </div>
 
         <div class="mt-10">
+            {#if data.isLogin}
             {#if allEvent.length > 0}
                 {#each allEvent as event}
                     <HomeEvent event={event}/>
@@ -47,6 +48,13 @@
             {:else}
                 <p class="text-center text-gray-500 mt-10 text-xl font-semibold">
                     ไม่พบอีเวนต์ "{searchText}"
+                </p>
+            {/if}
+            {/if}
+
+            {#if !data.isLogin}
+                <p class="text-center text-gray-500 mt-10 text-xl font-semibold">
+                    กรุณาเข้าสู่ระบบเพื่อดูกิจกรรม
                 </p>
             {/if}
         </div>

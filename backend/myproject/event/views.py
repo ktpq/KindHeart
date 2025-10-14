@@ -14,6 +14,12 @@ from datetime import datetime
 
 import random, string
 
+class EventListNoPermission(APIView):
+    def get(self, request):
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many=True)
+        return Response({"events": serializer.data}, status=200)
+
 class EventListView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
