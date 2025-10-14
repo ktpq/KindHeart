@@ -21,7 +21,7 @@
 <Navbar/>
 {/if} -->
 
-<main class="bg-[#FEF5ED] min-h-screen p-5">
+<main class="bg-[#f0f4ff] min-h-screen p-5">
     <section class="w-[90%] mx-auto mt-5 max-lg:w-[100%]">
         
         {@render children?.()}
