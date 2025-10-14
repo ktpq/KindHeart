@@ -13,6 +13,8 @@
         isModalShow = false
         document.body.style.overflow = "" 
     }
+
+    const base_api = import.meta.env.VITE_API_URL
     
 </script>
 
@@ -72,7 +74,7 @@
             <span>{event.created_by.username}</span>
         </div>
 
-        <img src="/home/activity.png" alt="activity" class="w-full mt-6 rounded-xl shadow-md object-cover">
+        <img src={`${base_api}${event.img_url}`} alt="activity" class="w-full mt-6 rounded-xl shadow-md object-cover">
 
         <div class="mt-6">
             <h3 class="text-2xl font-bold text-gray-800">Description</h3>
