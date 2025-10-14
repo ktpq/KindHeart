@@ -3,6 +3,7 @@
     import { formatDate, formatDateTime } from "../format";
     import  Cookies from "js-cookie";
     import axios from "axios";
+  import { goto } from "$app/navigation";
     let { event } = $props()
     let isModalShow = $state(false)
 
@@ -45,7 +46,22 @@
         fetchAllUser()
     })
 
-
+    let inputCode = ""
+    const checkParticipation = async () => {
+        try {
+            const base_api = import.meta.env.VITE_API_URL
+            const token = Cookies.get('authToken')
+            console.log(event.id)
+            const respone = await axios.put(`${base_api}/api/participation/event/${event.id}/`, { "ticket_code": inputCode }, {
+                headers: { Authorization: `Token ${token}`}
+            })
+            alert("เช็คชื่อเรียบร้อย")
+            window.location.reload()
+            console.log(respone.data)
+        } catch (error){
+            alert("ไม่พบผู้ใช้ในกิจกรรมของคุณ")
+        }
+    }
 </script>
 
 <div class="border-t-4 border-[#D3E4CD] p-5 flex justify-between items-center my-4 max-lg:flex-col">
@@ -83,15 +99,15 @@
 <div class="fixed inset-0 bg-black/50 z-40"></div>
 <div class="fixed inset-0 flex items-center justify-center z-50">
     <section class="w-[50%] max-lg:p-3 p-10 font-semibold rounded-2xl shadow-md h-[500px] bg-white max-lg:w-[90%] max-sm:mt-30">
-        {JSON.stringify(users)}
+        <!-- {JSON.stringify(users)} -->
         <div class="flex justify-between items-center px-5">
             <p></p>
             <h1 class="text-center text-4xl text-[#FFB97C] font-semibold"> Participants </h1>
             <button onclick={closeModal} class="cursor-pointer"> close </button>
         </div>
         <div class="p-5 mt-4 grid grid-cols-[10fr_2fr] gap-3 max-sm:flex max-sm:flex-col">
-            <input type="text" class="border-2 border-[#FFB97C] rounded-2xl py-2 px-10 shadow-md focus:outline-none" placeholder="Enter ticket code">
-            <button class="py-2 bg-[#FFB97C] font-bold rounded-lg shadow-md duration-200 hover:bg-[#c7874f] cursor-pointer"> Check </button>
+            <input type="text" class="border-2 border-[#FFB97C] rounded-2xl py-2 px-10 shadow-md focus:outline-none" placeholder="Enter ticket code" bind:value={inputCode}>
+            <button class="py-2 bg-[#FFB97C] font-bold rounded-lg shadow-md duration-200 hover:bg-[#c7874f] cursor-pointer" onclick={checkParticipation}> Check </button>
         </div>
 
         <div class="px-5">

@@ -126,3 +126,32 @@ class ParticipationEvent(APIView):
         users = Participation.objects.filter(event_id = event_id)
         serializer = MyParticipationSerializer(users, many=True)
         return Response(serializer.data, status=200)
+    
+    # เอาไว้เช็คชื่อ user
+    def put(self, request, event_id):
+        try:
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return Response({"detail": "ไม่พบอีเว้นต์นี้"}, status=404)
+
+        # ตรวจสอบว่า user เป็นเจ้าของ event หรือไม่
+        if request.user.id != event.createdBy_id:
+            return Response({"detail": "คุณไม่ใช่เจ้าของอีเว้นนี้"}, status=403)
+
+        ticket_code = request.data.get("ticket_code")
+        if not ticket_code:
+            return Response({"detail": "ต้องระบุ ticket_code"}, status=400)
+
+        try:
+            thisPerson = Participation.objects.get(ticket_code=ticket_code, event_id=event.id)
+        except Participation.DoesNotExist:
+            return Response({"detail": "ไม่พบผู้เข้าร่วมที่มี ticket_code นี้"}, status=404)
+
+        # toggle attended
+        if not thisPerson.attended:
+            thisPerson.attended = True
+            thisPerson.save()
+
+        serializer = MyParticipationSerializer(thisPerson)
+        return Response(serializer.data, status=200)
+
