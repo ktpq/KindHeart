@@ -1,63 +1,64 @@
 <script>
-    import NotiCard from "./NotiCard.svelte";
+	import NotiCard from "./NotiCard.svelte";
+	export let data;
 
-   let allNoti = $state([
-		{
-			id: 1,
-			title: "System Maintenance",
-			description: "The system will be under maintenance on October 10th from 1:00 AM to 3:00 AM.",
-			date: "2025-10-10"
-		},
-		{
-			id: 2,
-			title: "New Event Available",
-			description: "A new charity event has been added. Join now and make an impact!",
-			date: "2025-10-08"
-		},
-		{
-			id: 3,
-			title: "Profile Update Reminder",
-			description: "Please update your profile information to ensure we can contact you easily.",
-			date: "2025-10-05"
-		},
-		{
-			id: 4,
-			title: "Thank You for Participating!",
-			description: "We appreciate your participation in our recent event. Stay tuned for future updates.",
-			date: "2025-10-02"
-		}
-	]);
-
+	let allNoti = data.allNoti;
 </script>
 
-<main>
+<main class="p-8 bg-white min-h-screen rounded-2xl shadow-lg">
+	<!-- Header -->
+	<section class="flex items-center space-x-5 mb-10">
+		<button
+			class="cursor-pointer text-blue-600 hover:text-blue-800 duration-200"
+			onclick={() => window.history.back()}
+		>
+			<!-- Inline SVG แทน Iconify -->
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke-width="2"
+				stroke="currentColor"
+				class="w-10 h-10"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+			</svg>
+		</button>
 
-    <section class="flex items-center space-x-5">
+		<div>
+			<div class="flex items-center space-x-3">
+				<!-- Bell Icon -->
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="2"
+					stroke="currentColor"
+					class="w-10 h-10 text-blue-600"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9V8a6 6 0 1 0-12 0v1a8.967 8.967 0 0 1-2.311 6.772c1.773.74 3.57 1.2 5.454 1.31m5.714 0a23.9 23.9 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+					/>
+				</svg>
 
-        <button class="cursor-pointer" onclick={() => {window.history.back()}}> <img src="/notification/green-back.png" alt=""> </button>
-        
+				<h1 class="text-3xl text-blue-700 font-bold">Notifications</h1>
+			</div>
+			<p class="mt-2 font-medium text-blue-400">View your latest notifications</p>
+		</div>
+	</section>
 
-        <div class="">
-            <div class="flex items-center space-x-3">
-                <img src="/notification/green-bell.png" alt="" width="45">
-                <h1 class="text-3xl text-[#99a798] font-semibold "> Notification </h1>
-            </div>
-            <p class="mt-3 font-semibold text-[#aec2a9]"> View your notification </p>
-        </div>
-
-    </section>
-
-    <!-- notification -->
-    <section>
-
-        {#each allNoti as noti}
-        <NotiCard noti={noti}/>
-        {/each}
-        
-
-        
-
-
-    </section>
-    
+	<!-- Notification list -->
+	<section>
+		{#if allNoti.length === 0}
+			<p class="text-center text-gray-500 text-xl mt-20">
+				No notifications available.
+			</p>
+		{:else}
+			{#each allNoti as noti, i}
+				<NotiCard noti={noti} index={i} />
+			{/each}
+		{/if}
+	</section>
 </main>

@@ -24,9 +24,13 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"@iconify/svelte": "^5.0.2",
 		"aos": "^2.3.4",
 		"axios": "^1.12.2",
 		"date-fns": "^4.1.0",
-		"js-cookie": "^3.0.5"
+		"date-fns-tz": "^3.2.0",
+		"js-cookie": "^3.0.5",
+		"qrcode": "^1.5.4",
+		"sweetalert2": "^11.26.2"
 	}
 }

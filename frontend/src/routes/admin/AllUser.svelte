@@ -1,22 +1,6 @@
 <script>
     import UserCard from "./UserCard.svelte";
-    let allUser = $state([
-		{
-			id: 1,
-			username: "johndoe",
-			email: "johndoe@example.com"
-		},
-		{
-			id: 2,
-			username: "janesmith",
-			email: "janesmith@example.com"
-		},
-		{
-			id: 3,
-			username: "mikebrown",
-			email: "mikebrown@example.com"
-		}
-	]);
+    let { allUser } = $props()
 </script>
 
 <section>

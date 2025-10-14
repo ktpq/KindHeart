@@ -1,112 +1,165 @@
 <script lang="ts">
-    let { event } = $props()
-    import { formatDate, formatDateTime } from "../format";
-    let isModalShow = $state(false)
+    import { onMount } from "svelte";
+    import Cookies from "js-cookie";
+    import axios from "axios";
+    import Swal from "sweetalert2";
+
+    let { event } = $props();
+    const base_api = import.meta.env.VITE_API_URL;
+
+    let isModalShow = $state(false);
+    let inputCode = "";
+    let users = [];
 
     const openModal = () => {
-        isModalShow = true
-        document.body.style.overflow = "hidden"
-    }
+        isModalShow = true;
+        document.body.style.overflow = "hidden";
+    };
 
-    const closeModal = () =>{
-        isModalShow = false
-        document.body.style.overflow = "" 
-    }
-    const base_api = import.meta.env.VITE_API_URL
+    const closeModal = () => {
+        isModalShow = false;
+        document.body.style.overflow = "";
+    };
 
     const getEventStatus = (end_time: string) => {
         const now = new Date();
         const end = new Date(end_time);
         if (now > end) {
-            return { text: "Success", bg: "#BCF5C5", color: "#00E043" }; // สีเขียว
+            return { text: "Success", bg: "#BCF5C5", color: "#00E043" }; // เขียว
         } else {
-            return { text: "On-going", bg: "#FFD966", color: "#E08900" }; // สีส้ม
+            return { text: "On-going", bg: "#FFD966", color: "#E08900" }; // ส้ม
         }
     };
 
-    // สร้างตัวแปร status
     let status = getEventStatus(event.end_time);
 
+    onMount(() => {
+        const fetchAllUser = async () => {
+            try {
+                const token = Cookies.get('authToken');
+                const response = await axios.get(`${base_api}/api/participation/event/${event.id}/`, {
+                    headers: { Authorization: `Token ${token}` }
+                });
+                users = response.data;
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchAllUser();
+    });
 
+    const checkParticipation = async () => {
+        try {
+            const token = Cookies.get('authToken');
+            await axios.put(`${base_api}/api/participation/event/${event.id}/`, { ticket_code: inputCode }, {
+                headers: { Authorization: `Token ${token}` }
+            });
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Check-in Success!',
+                text: 'เช็คชื่อเรียบร้อย',
+                confirmButtonColor: '#EF4444', // ปุ่ม OK สีแดง
+                confirmButtonText: 'OK'
+            });
+
+            window.location.reload();
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'ไม่พบผู้ใช้ในกิจกรรมของคุณ',
+                confirmButtonColor: '#EF4444',
+                confirmButtonText: 'OK'
+            });
+        }
+    };
 </script>
 
-<div class="border-t-4 border-[#D3E4CD] p-5 flex justify-between items-center my-4 max-lg:flex-col">
-    <!-- box ซ้าย -->
-     
-    <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
-        <p class="text-2xl font-semibold">{formatDate(event.start_time)} </p>
-        
-        <img src={`${base_api}/${event.img_url}`} alt="" class="min-w-[100px]" width="150">
-        <div>
-            <div class="flex items-center space-x-3 max-sm:flex-col max-sm:space-y-3">
-                <p class="text-3xl font-bold font-main"> {event.title}  </p> 
-                <p class="text-lg px-4 py-1 rounded-3xl" style="background-color: {status.bg}; color: {status.color}">
+<!-- Event Card -->
+<div class="bg-white shadow-lg rounded-xl p-5 flex justify-between items-center my-4 max-lg:flex-col max-lg:space-y-4 hover:shadow-2xl transition hover:-translate-y-1">
+    <!-- Left -->
+    <div class="flex items-center space-x-6 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
+        <img src={`${base_api}/${event.img_url}`} alt="" class="w-32 h-32 rounded-lg object-cover shadow-md">
+        <div class="space-y-2">
+            <div class="flex items-center space-x-3 max-sm:flex-col max-sm:space-y-2">
+                <p class="text-2xl font-bold text-blue-600">{event.title}</p>
+                <p class="px-4 py-1 rounded-full text-sm font-semibold" style="background-color: {status.bg}; color: {status.color}">
                     {status.text}
                 </p>
             </div>
-            <div class="flex items-center space-x-4 mt-3 ">
-                <img src="/home/location.png" alt="" width="30">
-                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {formatDateTime(event.start_time)} - {formatDateTime(event.end_time)} </p>
+            <div class="flex items-center space-x-3 text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 12l4.243-4.243M6 12h18" />
+                </svg>
+                <p class="text-lg">{event.location} • {event.start_datetime} - {event.end_datetime}</p>
             </div>
         </div>
     </div>
-    <!-- box ขวา -->
-    <div class="flex flex-col justify-center space-y-3 max-lg:mt-5">
-        <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer" onclick={openModal}> Participants </button>
-        <a class="px-6 text-xl py-3 border-3 border-[#ADC2A9] text-[#9ba69b] rounded-lg font-bold cursor-pointer hover:bg-[#ebdfd3] duration-200 text-center" href="/edit/{event.id}"> Edit </a>
+
+    <!-- Right -->
+    <div class="flex flex-col justify-center space-y-3 max-lg:flex-row max-lg:space-x-3 max-lg:space-y-0">
+        <button class="bg-blue-600 text-white px-5 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-md duration-200 cursor-pointer" onclick={openModal}>
+            Participants
+        </button>
+        <a class="border-2 border-blue-400 text-blue-600 px-5 py-3 rounded-lg font-bold hover:bg-blue-50 shadow-md duration-200 cursor-pointer text-center" href={`/edit/${event.id}`}>
+            Edit
+        </a>
     </div>
-    
 </div>
 
-<!-- Event modal -->
+<!-- Participants Modal -->
 {#if isModalShow}
-<div class="fixed inset-0 bg-black/50 z-40"></div>
-<div class="fixed inset-0 flex items-center justify-center z-50">
-    <section class="w-[50%] max-lg:p-3 p-10 font-semibold rounded-2xl shadow-md h-[500px] bg-white max-lg:w-[90%] max-sm:mt-30">
-        <div class="flex justify-between items-center px-5">
-            <p></p>
-            <h1 class="text-center text-4xl text-[#FFB97C] font-semibold"> Participants </h1>
-            <button onclick={closeModal} class="cursor-pointer"> close </button>
-        </div>
-        <div class="p-5 mt-4 grid grid-cols-[10fr_2fr] gap-3 max-sm:flex max-sm:flex-col">
-            <input type="text" class="border-2 border-[#FFB97C] rounded-2xl py-2 px-10 shadow-md focus:outline-none" placeholder="Enter ticket code">
-            <button class="py-2 bg-[#FFB97C] font-bold rounded-lg shadow-md duration-200 hover:bg-[#c7874f] cursor-pointer"> Check </button>
+<div class="fixed inset-0 z-50 flex items-center justify-center">
+    <!-- Background -->
+    <div class="absolute inset-0 bg-black/80"></div>
+
+    <!-- Modal Content -->
+    <section class="relative bg-white rounded-2xl shadow-2xl w-[50%] max-lg:w-[90%] p-6 overflow-y-auto max-h-[80vh] z-10 space-y-6">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-3xl font-bold text-blue-600">Participants</h1>
+            <button class="text-gray-300 font-bold text-2xl" onclick={closeModal}>×</button>
         </div>
 
-        <div class="px-5">
-            <div class="px-5 mt-4 max-h-[300px] overflow-y-auto max-md:px-0">
-            <table class="w-full text-sm md:text-xl table-fixed">
+        <!-- Check Ticket -->
+        <div class="flex gap-3 max-sm:flex-col">
+            <input type="text" placeholder="Enter ticket code" class="flex-1 border-2 border-blue-600 rounded-2xl py-2 px-4 shadow-md focus:outline-none" bind:value={inputCode}>
+            <button class="bg-red-500 text-white py-2 px-6 rounded-lg font-bold shadow-md hover:bg-red-600 transition" onclick={checkParticipation}>
+                Check
+            </button>
+        </div>
 
-
+        <!-- Participants Table -->
+        <div class="overflow-y-auto max-h-[300px]">
+            <table class="w-full text-left text-sm md:text-base table-fixed">
                 <thead class="bg-gray-100">
-                <tr>
-                    <th class="px-4 py-2 w-1/12 text-left">ID</th>
-                    <th class="px-4 py-2 w-3/12 text-left">Username</th>
-                    <th class="px-4 py-2 w-5/12 text-left">Ticket Code</th>
-                    <th class="px-4 py-2 w-3/12 text-left">Status</th>
-                </tr>
+                    <tr>
+                        <th class="px-4 py-2 w-1/12">ID</th>
+                        <th class="px-4 py-2 w-3/12">Username</th>
+                        <th class="px-4 py-2 w-5/12">Ticket Code</th>
+                        <th class="px-4 py-2 w-3/12">Status</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2">1</td>
-                    <td class="px-4 py-2">Johndoe</td>
-                    <td class="px-4 py-2">ABCDEFGHFK</td>
-                    <td class="px-4 py-2 text-red-500">Absent</td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2">2</td>
-                    <td class="px-4 py-2">Johndoe</td>
-                    <td class="px-4 py-2">ABCDEFGHFK</td>
-                    <td class="px-4 py-2 text-green-500">Attended</td>
-                </tr>
-                <!-- เพิ่ม row ตามต้องการ -->
+                    {#each users as user}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-2">{user.user.id}</td>
+                        <td class="px-4 py-2">{user.user.username}</td>
+                        <td class="px-4 py-2">{user.ticket_code}</td>
+                        <td class="px-4 py-2 {user.attended ? 'text-green-500' : 'text-red-500'}">
+                            {user.attended ? 'Attended' : 'Absent'}
+                        </td>
+                    </tr>
+                    {/each}
                 </tbody>
             </table>
-</div>
+        </div>
 
+        <div class="flex justify-end">
+            <button class="px-5 py-2 bg-blue-600 text-white rounded-lg font-bold shadow-md hover:bg-blue-700 transition" onclick={closeModal}>
+                Close
+            </button>
         </div>
     </section>
 </div>
 {/if}
-
-

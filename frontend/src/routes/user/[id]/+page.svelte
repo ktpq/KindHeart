@@ -1,115 +1,55 @@
 <script>
-    let {data} = $props()
+    export let data;
     import UserEvent from "./UserEvent.svelte";
-    let events = $state([
-    {
-        id: 1,
-        date: "3 December 2025",
-        title: "Plant the tree",
-        location: "Chonburi",
-        start_time: "11AM",
-        end_time: "4PM",
-        category: "Environment",
-        description: "ช่วยกันปลูกต้นไม้เพื่อเพิ่มพื้นที่สีเขียวในชุมชน",
-        capacity: 25,
-        author: "Ronnie Coleman"
-    },
-    {
-        id: 2,
-        date: "10 December 2025",
-        title: "Beach Cleanup",
-        location: "Pattaya",
-        start_time: "8AM",
-        end_time: "12PM",
-        category: "Environment",
-        description: "ร่วมทำความสะอาดชายหาดและอนุรักษ์สิ่งแวดล้อม",
-        capacity: 40,
-        author: "Lisa Smith"
-    },
-    {
-        id: 3,
-        date: "15 January 2026",
-        title: "Charity Run",
-        location: "Bangkok",
-        start_time: "6AM",
-        end_time: "10AM",
-        category: "Sports",
-        description: "วิ่งการกุศลเพื่อสนับสนุนเด็กนักเรียน",
-        capacity: 100,
-        author: "John Doe"
-    },
-    {
-        id: 4,
-        date: "20 February 2026",
-        title: "Book Fair",
-        location: "Chiang Mai",
-        start_time: "9AM",
-        end_time: "6PM",
-        category: "Education",
-        description: "งานแสดงหนังสือและกิจกรรมการเรียนรู้สำหรับทุกเพศทุกวัย",
-        capacity: 75,
-        author: "Mary Johnson"
-    },
-    {
-        id: 5,
-        date: "5 March 2026",
-        title: "Art Workshop",
-        location: "Khon Kaen",
-        start_time: "1PM",
-        end_time: "5PM",
-        category: "Art",
-        description: "เวิร์กชอปศิลปะสำหรับผู้เริ่มต้นและผู้สนใจงานศิลป์",
-        capacity: 20,
-        author: "Alice Brown"
-    },
-    {
-        id: 6,
-        date: "18 April 2026",
-        title: "Music Festival",
-        location: "Phuket",
-        start_time: "2PM",
-        end_time: "11PM",
-        category: "Music",
-        description: "เทศกาลดนตรีสดกับศิลปินชั้นนำหลายวง",
-        capacity: 500,
-        author: "David Lee"
-    }
-])
 
-   
-
+    let user = data.user;
+    let events = data.events;
 </script>
 
 <main class="p-5">
 
+    <!-- Header -->
     <section class="flex items-center space-x-5">
-
-        <button class="cursor-pointer" onclick={() => {window.history.back()}}> <img src="/notification/green-back.png" alt=""> </button>
-        <img src="/notification/green-bell.png" alt="" width="45">
-        <h1 class="text-3xl text-[#99a798] font-semibold "> User Profile -> {data.id}</h1>
+        <a class="cursor-pointer" href="/admin">
+            <!-- Arrow Left SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600 hover:text-blue-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </a>
+        <!-- Bell SVG -->
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C8.67 6.165 8 7.388 8 8.75v5.408c0 .536-.21 1.05-.586 1.414L6 17h5m4 0v1a3 3 0 11-6 0v-1h6z"/>
+        </svg> -->
+        <h1 class="text-3xl text-blue-700 font-semibold">User Profile</h1>
     </section>
 
-    <!-- profile section -->
-    <section class="mt-10 w-[65%] mx-auto p-7 flex flex-col items-center space-y-4">
-        <img src="/profile/handsome.jpg" alt="" width="125" class="rounded-[100%] border-[#FFB97C] border-3">
-        <p class="text-2xl font-bold"> JohnDoe </p>
+    <!-- Profile Section -->
+    <section class="mt-10 w-[65%] mx-auto p-7 flex flex-col items-center space-y-4 bg-white rounded-2xl shadow-md">
+        <img src="/profile/handsome.jpg" alt="" width="125" class="rounded-full border-4 border-blue-300">
+        <p class="text-2xl font-bold text-blue-800">{user.username}</p>
         <div class="flex items-center space-x-3">
-            <img src="/login/email-green.png" alt="">
-            <p class="text-lg font-bold"> JohnDoe@example.com </p>
+            <!-- Email SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 12h.01M12 16h.01M8 12h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8z"/>
+            </svg>
+            <p class="text-lg font-medium text-blue-700">{user.email}</p>
         </div>
     </section>
 
-    <!-- event section -->
-     <section class="flex items-center space-x-5 mt-7">
-        <img src="/notification/green-bell.png" alt="" width="45">
-        <h1 class="text-3xl text-[#99a798] font-semibold "> Events Created </h1>
+    <!-- Events Header -->
+    <section class="flex items-center space-x-5 mt-7">
+        <!-- Bell SVG -->
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C8.67 6.165 8 7.388 8 8.75v5.408c0 .536-.21 1.05-.586 1.414L6 17h5m4 0v1a3 3 0 11-6 0v-1h6z"/>
+        </svg> -->
+        <h1 class="text-4xl text-blue-700 font-bold mt-7">Events Created</h1>
     </section>
 
+    <!-- Events Section -->
     <section class="mt-7">
-        {#each events as event}
-        <UserEvent event={event}/>
+        {#each events as event, i}
+            <UserEvent event={event}/>
         {/each}
     </section>
-        
-    
+
 </main>
