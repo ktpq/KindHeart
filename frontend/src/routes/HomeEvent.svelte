@@ -1,8 +1,6 @@
 <script>
-    import Swal from "sweetalert2";
     import { joinEvent } from "./joinEvent";
     let { event } = $props()
-    import { formatDate, formatDateTime, formatTimeUTC } from "./format";
     let isModalShow = $state(false)
 
     const img = import.meta.env.VITE_API_URL + event.img_url
@@ -15,96 +13,115 @@
         isModalShow = false
         document.body.style.overflow = "" 
     }
-
-    
-
     
 </script>
 
-<div class="border-t-4 border-[#D3E4CD] p-5 flex justify-between items-center my-4 max-lg:flex-col">
-    <!-- box ซ้าย -->
-    <div class="py-2 flex items-center justify-between space-x-8 max-lg:flex-col max-lg:space-x-0 max-lg:space-y-4">
-        
-        <p class="text-2xl font-semibold">{event.start_date} </p>
-        
-        <img src={img} alt="" class="min-w-[100px]" width="150">
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row items-center gap-6 p-6 hover:shadow-2xl transition duration-300">
+    <!-- Image -->
+    <div class="flex-shrink-0">
+        <img src={img} alt={event.title} class="w-48 h-48 object-cover rounded-xl shadow-md">
+    </div>
+
+    <!-- Info -->
+    <div class="flex-1 flex flex-col justify-between gap-4">
         <div>
-            <p class="text-3xl font-bold font-main"> {event.title} </p>
-            <div class="flex items-center space-x-4 mt-3 ">
-                <img src="/home/location.png" alt="" width="30">
-                <p class="text-xl font-semibold text-[#ADC2A9]"> {event.location} • {event.start_datetime} - {event.end_datetime} </p>
-            </div>
+            <h2 class="text-3xl font-bold text-gray-900">{event.title}</h2>
+            <p class="text-gray-500 mt-1">{event.start_date} • {event.location}</p>
+        </div>
+
+        <div class="flex items-center gap-3 text-blue-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 12l4.243-4.243M6 12h12"/>
+            </svg>
+            <p class="text-lg">{event.start_datetime} - {event.end_datetime}</p>
         </div>
     </div>
-    <!-- box ขวา -->
-    <div class="flex flex-col justify-center space-y-3 max-lg:mt-5">
+
+    <!-- Actions -->
+    <div class="flex flex-col gap-3 lg:mt-0 mt-4">
         {#if event.now_capacity < event.max_capacity}
-        <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer" onclick={() => {joinEvent(event.id)}}> Join us</button>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg py-3 px-6 transition duration-200" onclick={() => joinEvent(event.id)}>
+                Join us
+            </button>
         {:else}
-        <button class="bg-[#FFB97C] px-5 text-xl py-3 text-white rounded-lg font-bold hover:bg-[#ee9e59] duration-200 cursor-pointer"> full </button>
+            <button class="bg-gray-300 text-gray-600 font-semibold rounded-lg py-3 px-6 cursor-not-allowed">
+                Full
+            </button>
         {/if}
-        <button class="px-6 text-xl py-3 border-3 border-[#ADC2A9] text-[#9ba69b] rounded-lg font-bold cursor-pointer hover:bg-[#ebdfd3] duration-200" onclick={openModal}> More Info </button>
+
+        <button class="border-2 border-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition duration-200" onclick={openModal}>
+            More Info
+        </button>
     </div>
-    
 </div>
 
-<!-- Event modal -->
 {#if isModalShow}
-<div class="fixed inset-0 bg-black/50 z-40"></div>
-<div class="fixed inset-0 flex items-center justify-center z-50">
-    <section class="w-[40%] p-10 font-semibold rounded-2xl shadow-md h-[800px] overflow-y-auto bg-white max-lg:w-[90%] max-sm:mt-30">
-        <div class="flex justify-between items-center max-sm:flex-col max-sm:space-y-3">
-            <p class="text-3xl font-bold"> {event.title} </p>
-            <p class="bg-[#1AD048] text-white px-5 py-1 rounded-2xl"> {event.category_name.name} </p>
+<div class="fixed inset-0 z-50 flex items-center justify-center px-4">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick={closeModal}></div>
+
+    <div class="relative bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-y-auto max-h-[90vh] p-8 animate-fadeIn">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+            <h2 class="text-4xl font-bold text-gray-900">{event.title}</h2>
+            <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">{event.category_name.name}</span>
         </div>
-        <div class="mt-4 flex items-center space-x-2 max-sm:justify-center">
-            <img src="/home/person.png" alt="" width="25">
-            <p class="text-[#8E8B8B]"> {event.created_by.username} </p>
+
+        <div class="flex items-center gap-2 mt-3 text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1118.879 6.196 9 9 0 015.121 17.804z"/>
+            </svg>
+            <span>{event.created_by.username}</span>
         </div>
-        <img src="/home/activity.png" alt="" class="w-full mt-4">
+
+        <img src="/home/activity.png" alt="activity" class="w-full mt-6 rounded-xl shadow-md object-cover">
 
         <div class="mt-6">
-            <p class="text-3xl font-bold"> Description </p>
-            <p class="mt-3 text-[#8E8B8B]"> {event.description}</p>
+            <h3 class="text-2xl font-bold text-gray-800">Description</h3>
+            <p class="mt-2 text-gray-600 leading-relaxed">{event.description}</p>
         </div>
 
         <div class="mt-6">
-            <p class="text-3xl font-bold"> Location </p>
-            <p class="mt-3 text-[#8E8B8B]"> {event.location} </p>
+            <h3 class="text-2xl font-bold text-gray-800">Location</h3>
+            <p class="mt-2 text-gray-600">{event.location}</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 mt-5 max-sm:flex max-sm:flex-col">
-            <div class="items-center space-x-4 flex space-x-4">
-                <img src="/home/time.png" alt="" width="50">
+        <div class="grid grid-cols-2 gap-6 mt-6 max-sm:grid-cols-1">
+            <div class="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/>
+                </svg>
                 <div>
-                    <p class="text-lg"> start :{event.start_datetime}</p>
-                    <p class="text-lg"> end : {event.end_datetime} </p>
+                    <p class="text-gray-700 font-medium">Start: {event.start_datetime}</p>
+                    <p class="text-gray-700 font-medium">End: {event.end_datetime}</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-4">
-                <img src="/home/people.png" alt="" width="50">
-                <p class="text-3xl"> {event.max_capacity} </p>
+            <div class="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M19 3v4M5 21h14a2 2 0 002-2V7H3v12a2 2 0 002 2z"/>
+                </svg>
+                <p class="text-3xl font-bold text-gray-900">{event.max_capacity}</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-5 max-sm:flex max-sm:flex-col max-sm:gap-0">
-            <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 border-2 text-[#8E8B8B] font-bold text-xl hover:bg-[#f1f1f1] duration-200 rounded-lg" onclick={closeModal}>
-            Cancel
+        <div class="flex gap-4 mt-8 max-sm:flex-col">
+            <button class="flex-1 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition duration-200" onclick={closeModal}>
+                Cancel
             </button>
-            
+
             {#if event.now_capacity < event.max_capacity}
-            <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 text-white bg-[#FFB97C] font-bold text-xl hover:bg-[#d89458] duration-200 rounded-lg" onclick={() => {joinEvent(event.id)}}>
-            Join us 
-            </button>
+                <button class="flex-1 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200" onclick={() => joinEvent(event.id)}>
+                    Join us
+                </button>
             {:else}
-            <button class="max-sm:w-full max-sm:my-2 shadow-md my-5 py-3 text-white bg-[#FFB97C] font-bold text-xl hover:bg-[#d89458] duration-200 rounded-lg">
-            full
-            </button>
+                <button class="flex-1 py-3 bg-gray-300 text-gray-600 font-semibold rounded-lg cursor-not-allowed">
+                    Full
+                </button>
             {/if}
-            
         </div>
-    </section>
+    </div>
 </div>
 {/if}
 
-
+<style>
+    @keyframes fadeIn { 0% { opacity:0; transform:translateY(-10px);} 100% {opacity:1; transform:translateY(0);} }
+    .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+</style>

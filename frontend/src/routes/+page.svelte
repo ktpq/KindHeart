@@ -6,7 +6,7 @@
     import AOS from 'aos'
 
     let allEvent = data.allEvent
-    let originalEvents = [...allEvent] // เก็บสำเนาข้อมูลทั้งหมดไว้
+    let originalEvents = [...allEvent] 
     let searchText = ""
 
     onMount(() => {
@@ -15,52 +15,43 @@
 
     const filterEvent = () => {
         const query = searchText.toLowerCase().trim()
-
-        if (query === "") {
-            allEvent = [...originalEvents] // ถ้าไม่มีข้อความ -> แสดงทั้งหมด
-        } else {
-            allEvent = originalEvents.filter(event =>
-                event.title.toLowerCase().includes(query)
-            )
-        }
+        allEvent = query === "" ? [...originalEvents] : originalEvents.filter(event =>
+            event.title.toLowerCase().includes(query)
+        )
     }
 </script>
 
-<main class="bg-[#FEF5ED] min-h-screen p-5">
-    <section class="w-[90%] mx-auto mt-5">
-        <!-- {JSON.stringify(data)} -->
-        <div class="flex justify-between items-center max-lg:flex-col">
-            <div class="flex space-x-3 max-lg:flex-col max-lg:w-full max-lg:space-y-3">
-                <div class="relative max-lg:w-full">
-                    <input type="text" class="bg-[#ADC2A9] py-3 pr-5 pl-12 border-2 border-[#D3E4CD] rounded-lg focus:outline-none font-bold max-lg:w-[100%]" placeholder="Search Events" bind:value={searchText} oninput={filterEvent}>
-                    <img src="/home/search.png" alt="" width="25" class="absolute top-3 left-2">
-                </div>
-                
+<main class="bg-[#f0f4ff] min-h-screen p-6">
+    <section class="w-full max-w-6xl mx-auto mt-8">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+            <div class="relative flex-1">
+                <input 
+                    type="text" 
+                    class="w-full bg-white py-3 pl-12 pr-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 font-medium text-gray-700" 
+                    placeholder="Search Events" 
+                    bind:value={searchText} 
+                    oninput={filterEvent}
+                >
+                <img src="/home/search.png" alt="search icon" class="absolute top-1/2 left-3 -translate-y-1/2 w-6 h-6 opacity-60">
             </div>
         </div>
 
-        <div class="mt-10">
+        <div class="mt-12 space-y-6">
             {#if data.isLogin}
-            {#if allEvent.length > 0}
-                {#each allEvent as event}
-                    <HomeEvent event={event}/>
-                {/each}
+                {#if allEvent.length > 0}
+                    {#each allEvent as event}
+                        <HomeEvent event={event}/>
+                    {/each}
+                {:else}
+                    <p class="text-center text-gray-400 text-lg font-medium mt-10">
+                        ไม่พบอีเวนต์ "{searchText}"
+                    </p>
+                {/if}
             {:else}
-                <p class="text-center text-gray-500 mt-10 text-xl font-semibold">
-                    ไม่พบอีเวนต์ "{searchText}"
-                </p>
-            {/if}
-            {/if}
-
-            {#if !data.isLogin}
-                <p class="text-center text-gray-500 mt-10 text-xl font-semibold">
+                <p class="text-center text-gray-400 text-lg font-medium mt-10">
                     กรุณาเข้าสู่ระบบเพื่อดูกิจกรรม
                 </p>
             {/if}
         </div>
     </section>
-
 </main>
-
- <!-- h-[800px] overflow-y-auto -->
-
