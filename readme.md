@@ -1,0 +1,1 @@
+1. docker exec -it kindheart-backend sh -c "python manage.py migrate"

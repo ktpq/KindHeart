@@ -1,0 +1,54 @@
+  # version: "3.8"
+
+  services:
+
+    db:
+      container_name: kindheart-db
+      image: postgres:latest
+      restart: always
+      environment:
+        POSTGRES_DB: KindHeart
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+      ports:
+        - "5433:5432" 
+      volumes:
+        - kindheart_pg_data:/var/lib/postgresql/data
+
+    backend:
+      container_name: kindheart-backend
+      restart: always
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      volumes:
+        - ./backend:/app
+      ports:
+        - "8000:8000"
+      depends_on:
+        - db
+
+
+    frontend:
+      container_name: kindheart-frontend
+      restart: always
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      volumes:
+        - ./frontend:/app
+        - /app/node_modules
+      env_file:
+        - ./frontend/.env
+      ports:
+        - "5173:5173"
+      environment:
+        - CHOKIDAR_USEPOLLING=true
+      tty: true
+
+  volumes:
+    kindheart_pg_data:
+    
+
+
+

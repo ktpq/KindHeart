@@ -1,0 +1,10 @@
+# ไม่ต้อง copy node_modules จากเครื่องเราเข้าไปใน image
+node_modules
+
+# ไม่ต้อง copy .env เข้าไปใน image (เพราะเราใช้ env_file ใน docker-compose)
+.env
+.env.*
+
+# ไฟล์ของ SvelteKit ที่ build แล้ว (ไม่จำเป็นใน dev)
+.svelte-kit
+build

@@ -88,7 +88,9 @@
 			{#if isDropDownOpen}
 				<div class="mt-3 bg-blue-50 border border-gray-200 rounded-lg shadow-md">
 					<a href="/profile" class="block px-4 py-2 hover:bg-blue-100 text-gray-700">Profile</a>
+					{#if $user.is_staff}
 					<a href="/admin" class="block px-4 py-2 hover:bg-blue-100 text-gray-700">Admin Panel</a>
+					{/if}
 					<button class="block px-4 py-2 hover:bg-blue-100 text-red-500 w-full text-left" onclick={handleLogout}>Logout</button>
 				</div>
 			{/if}
