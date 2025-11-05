@@ -1,5 +1,38 @@
-docker compose up -d --build
-docker exec -it kindheart-backend sh -c "python manage.py migrate"
-Get-Content init.sql | docker-compose exec -T db psql -U postgres -d KindHeart
+# 💖 KindHeart — Volunteer Activity Platform
 
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@gmail.com', '1234')" | docker exec -i kindheart-backend python manage.py shell
+> **KindHeart** คือเว็บสำหรับลงงานจิตอาสา (Volunteer Platform)  
+> ผู้ใช้สามารถสมัครสมาชิกเพื่อลงงานจิตอาสา หรือเข้าร่วมกิจกรรมที่ผู้อื่นสร้างได้
+
+---
+
+## 🚀 Tech Stack
+
+| Layer | Technology |
+| :-- | :-- |
+| 🎨 **Frontend** | SvelteKit |
+| ⚙️ **Backend** | Python (Django) |
+| 🗄️ **Database** | PostgreSQL |
+| 💅 **Styling** | Tailwind CSS |
+| 🐳 **Containerization** | Docker & Docker Compose |
+
+---
+
+## 🧠 Concept
+
+แพลตฟอร์มนี้ถูกออกแบบมาเพื่อสนับสนุนกิจกรรมจิตอาสา  
+- ผู้ใช้สามารถ **สมัครสมาชิก** เพื่อสร้างหรือเข้าร่วมงานจิตอาสา  
+- ช่วยให้การจัดการงานจิตอาสาในชุมชนเป็นเรื่องง่ายและมีระบบมากขึ้น  
+- สร้างสังคมแห่งการช่วยเหลือซึ่งกันและกัน ❤️
+
+---
+
+## 🛠️ วิธีการใช้งาน
+
+> 🔹 ก่อนเริ่มต้น กรุณาเปิด **DockerDesktop** ให้เรียบร้อย
+1. git clone https://github.com/ktpq/KindHeart.git
+2. cd KindHeart
+3. รัน docker compose up -d --build
+4. รัน docker exec -it kindheart-backend sh -c "python manage.py migrate"
+5. รัน Get-Content init.sql | docker-compose exec -T db psql -U postgres -d KindHeart
+6. รัน echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@gmail.com', '1234')" | docker exec -i kindheart-backend python manage.py shell
+7. เปิด localhost:5173
