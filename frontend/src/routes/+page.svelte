@@ -6,7 +6,7 @@
     import AOS from 'aos'
 
     let allEvent = data.allEvent
-    let originalEvents = [...allEvent] 
+    let originalEvents = allEvent
     let searchText = ""
 
     onMount(() => {
@@ -44,7 +44,7 @@
                     {/each}
                 {:else}
                     <p class="text-center text-gray-400 text-lg font-medium mt-10">
-                        ไม่พบอีเวนต์ "{searchText}"
+                        ไม่พบอีเวนต์
                     </p>
                 {/if}
             {:else}

@@ -1,8 +1,9 @@
 import axios from "axios"
+import { PRIVATE_API_URL } from "$env/static/private";
 // import Cookies from "js-cookie";
 
 export async function load({ params, cookies }) {
-    const base_api = import.meta.env.VITE_API_URL;
+    const base_api = PRIVATE_API_URL;
     const token = cookies.get("authToken");
     try{
         const response = await axios.get(`${base_api}/api/event/${params.id}/`, {

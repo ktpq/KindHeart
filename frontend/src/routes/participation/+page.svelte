@@ -2,7 +2,7 @@
     import ParticipationEvent from "./ParticipationEvent.svelte";
     export let data;
 
-    let allEvent = data.allEvent;
+    let allEvent = data.allEvent || [];
 </script>
 
 <div class="w-[100%] mx-auto p-5 space-y-4">

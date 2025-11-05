@@ -39,7 +39,7 @@
         - ./frontend:/app
         - /app/node_modules
       env_file:
-        - ./frontend/.env
+        - ./frontend/.env.local
       ports:
         - "5173:5173"
       environment:

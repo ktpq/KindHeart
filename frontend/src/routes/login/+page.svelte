@@ -49,7 +49,7 @@
 
 <main class="bg-gray-50 h-screen flex justify-center items-center px-4">
   <section class="w-full max-w-md bg-white rounded-3xl shadow-2xl px-10 py-12" data-aos="fade-up" data-aos-duration="1500">
-    <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">Login 🩷</h1>
+    <h1 class="text-4xl font-bold mb-8 text-center text-gray-800"> Login 🩷</h1>
 
     <div class="space-y-6">
       <!-- Username -->

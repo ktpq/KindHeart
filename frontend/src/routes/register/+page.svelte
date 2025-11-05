@@ -26,6 +26,7 @@
         confirmButtonColor: '#3B82F6'
       }).then(() => goto('/login'))
     } catch (error){
+      console.log(error.response.data)
       Swal.fire({
         icon: 'error',
         title: 'ไม่สามารถลงทะเบียนได้',
