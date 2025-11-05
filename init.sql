@@ -1,5 +1,5 @@
-INSERT INTO event_category (name) VALUES ('สิ่งแวดล้อม');
-INSERT INTO event_category (name) VALUES ('สังคมและชุมชน');
-INSERT INTO event_category (name) VALUES ('การศึกษา');
-INSERT INTO event_category (name) VALUES ('สุขภาพและการแพทย์');
-INSERT INTO event_category (name) VALUES ('จิตอาสาออนไลน์');
+INSERT INTO event_category (name) VALUES ('Environment');
+INSERT INTO event_category (name) VALUES ('Social & Community');
+INSERT INTO event_category (name) VALUES ('Education');
+INSERT INTO event_category (name) VALUES ('Health & Medical');
+INSERT INTO event_category (name) VALUES ('Online Volunteering');

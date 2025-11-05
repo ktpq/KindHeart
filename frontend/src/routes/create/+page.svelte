@@ -116,11 +116,11 @@
         <label class="text-blue-600 text-2xl font-semibold">Category</label>
         <select class="w-full mt-2 px-5 py-3 rounded-xl focus:outline-none bg-blue-50 shadow-sm" bind:value={category}>
             <option value="">Select category</option>
-            <option value="1">สิ่งแวดล้อม</option>
-            <option value="2">สังคมและชุมชน</option>
-            <option value="3">การศึกษา</option>
-            <option value="4">สุขภาพและการแพทย์</option>
-            <option value="5">จิตอาสาออนไลน์</option>
+            <option value="1">Environment</option>
+            <option value="2">Social & Community</option>
+            <option value="3">Education</option>
+            <option value="4">Health & Medical</option>
+            <option value="5">Online Volunteering</option>
         </select>
     </div>
 
