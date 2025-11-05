@@ -36,3 +36,7 @@
 5. รัน Get-Content init.sql | docker-compose exec -T db psql -U postgres -d KindHeart
 6. รัน echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@gmail.com', '1234')" | docker exec -i kindheart-backend python manage.py shell
 7. เปิด localhost:5173
+
+## 👤 บัญชีการใช้งาน
+**admin** -> username: admin / password: 1234  
+**user** -> สมัครเองเลยจ้า
