@@ -4,7 +4,7 @@
 
     db:
       container_name: kindheart-db
-      image: postgres:latest
+      image: postgres:17
       restart: always
       environment:
         POSTGRES_DB: KindHeart
