@@ -29,13 +29,34 @@
 ## 🛠️ วิธีการใช้งาน
 
 > 🔹 ก่อนเริ่มต้น กรุณาเปิด **DockerDesktop** ให้เรียบร้อย
-1. git clone https://github.com/ktpq/KindHeart.git
-2. cd KindHeart
-3. รัน docker compose up -d --build
-4. รัน docker exec -it kindheart-backend sh -c "python manage.py migrate"
-5. รัน Get-Content init.sql | docker-compose exec -T db psql -U postgres -d KindHeart
-6. รัน echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@gmail.com', '1234')" | docker exec -i kindheart-backend python manage.py shell
+1. โคลนโปรเจคต์
+```bash
+git clone https://github.com/ktpq/KindHeart.git
+```
+2. เข้าไปในโฟลเดอร์
+```bash
+cd KindHeart
+```
+3. รัน container ทั้งหมด ด้วย docker compose 
+```bash
+docker compose up -d --build
+```
+4. Migrate database
+```bash
+docker exec -it kindheart-backend sh -c "python manage.py migrate"
+```
+5. Set ค่า default ให้ตารางต่างๆ ใน database
+```bash
+Get-Content init.sql | docker-compose exec -T db psql -U postgres -d KindHeart
+```
+6. รันโปรเจค
+```bash
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@gmail.com', '1234')" | docker exec -i kindheart-backend python manage.py shell
+```
 7. เปิด localhost:5173
+
+
+
 
 ## 👤 บัญชีการใช้งาน
 **admin** -> username: admin / password: 1234  
