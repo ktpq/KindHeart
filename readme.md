@@ -49,7 +49,7 @@ docker exec -it kindheart-backend sh -c "python manage.py migrate"
 ```bash
 Get-Content init.sql | docker-compose exec -T db psql -U postgres -d KindHeart
 ```
-6. รันโปรเจค
+6. สร้าง account admin ใน local database
 ```bash
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@gmail.com', '1234')" | docker exec -i kindheart-backend python manage.py shell
 ```
